@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table class="table" border="1">
+        <thead>
+        <tr>
+            <th>Application ID</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Date of Visit</th>
+            <th>Tenant ID</th>
+            <th>Owner ID</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="applications : ${applicationForView}">
+            <td th:text="${applications.applicationID}"></td>
+            <td th:text="${applications.date}"></td>
+            <td th:text="${applications.description}"></td>
+            <td th:text="${applications.dateOfVisit}"></td>
+            <td th:text="${applications.tenantID}"></td>
+            <td th:text="${applications.ownerID}"></td>
+
+            <!--            <td>-->
+<!--                <a th:href="@{'/applications/view/' + ${application.applicationID}}">Details</a>-->
+<!--            </td>-->
+        </tr>
+        <tr th:if="${#lists.isEmpty(applicationForView)}">
+            <td colspan="6">No applications available.</td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+<header>
+    This is the Header
+    <a sec:authorize="isAuthenticated()"  class="nav-link">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit"  class="btn btn-primary" value="Sign Out"/>
+        </form> </a>
+    <a sec:authorize="!isAuthenticated()" href="/login" class="nav-link">Sign In
+    </a>
+</header>
+
+</body>
+</html>

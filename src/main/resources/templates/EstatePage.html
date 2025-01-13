@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Estate Listings</title>
+</head>
+<body>
+<h1>Estate Listings</h1>
+<a href="/estate/new">Create a New Estate</a>
+
+<table class="table" border="1">
+    Filter By:
+
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Square Meters</th>
+        <th>Type</th>
+        <th>Address</th>
+        <th>Area</th>
+        <th>Age of Construction</th>
+        <th>Duration</th>
+        <th>Price</th>
+        <th>Floor</th>
+        <th>Rooms</th>
+        <th>Heating</th>
+        <th>Parking</th>
+        <th>Availability</th>
+        <th>Description</th>
+        <th>Last Updated</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="estate : ${estates}">
+        <td th:text="${estate.id}"></td>
+        <td th:text="${estate.squareMeters}"></td>
+        <td th:text="${estate.typeOfEstate}"></td>
+        <td th:text="${estate.address}"></td>
+        <td th:text="${estate.area}"></td>
+        <td th:text="${estate.ageOfConstruction}"></td>
+        <td th:text="${estate.duration}"></td>
+        <td th:text="${estate.price}"></td>
+        <td th:text="${estate.floor}"></td>
+        <td th:text="${estate.amountOfRooms}"></td>
+        <td th:text="${estate.typeOfHeating}"></td>
+        <td th:text="${estate.parking} ? 'Yes' : 'No'"></td>
+        <td th:text="${estate.availability} ? 'Available' : 'Not Available'"></td>
+        <td th:text="${estate.description}"></td>
+        <td th:text="${estate.lastUpdated}"></td>
+        <td>
+            <a th:href="@{'/estate/' + ${estate.id}}">Details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<footer>
+    <select id="comboBox" onchange="navigateToUrl(this)">
+        <option value="">-- Select --</option>
+        <option value="https://www.example.com">Example 1</option>
+        <option value="https://www.google.com">Google</option>
+        <option value="https://www.github.com">GitHub</option>
+    </select>
+</footer>
+</body>
+</html>
