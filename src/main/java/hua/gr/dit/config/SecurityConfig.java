@@ -47,11 +47,5 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        return encoder;
-//    }
-
 }
 

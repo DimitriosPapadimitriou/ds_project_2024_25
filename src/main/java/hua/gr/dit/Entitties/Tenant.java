@@ -23,31 +23,23 @@ public class Tenant {
     @Column
     private Integer id;
 
-    @Column
-    private String firstName;
 
-    @Column
-    private String lastName;
-
-    @Column
-    private String email;
-
-    @Column
-    private String phoneNumber;
-
-    @Column
-    private Integer rating;
-
-    public Tenant(Integer id, String firstName, String lastName, String email, String phoneNumber, Integer rating) {
+    public Tenant(Integer id, List<ApplicationOfRental> rentals, User user, List<ApplicationForView> views) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.rating = rating;
+        this.rentals = rentals;
+        this.user = user;
+        this.views = views;
     }
 
     public Tenant() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getId() {
@@ -58,55 +50,13 @@ public class Tenant {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
     @Override
     public String toString() {
         return "Tenant{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", rating=" + rating +
+                ", user=" + user +
+                ", views=" + views +
+                ", rentals=" + rentals +
                 '}';
     }
 }

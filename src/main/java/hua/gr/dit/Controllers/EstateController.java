@@ -102,7 +102,7 @@ public class EstateController {
     public String addEstatePage(Model model){
         Estate estate = new Estate();
         model.addAttribute("estate",estate);
-//        estateService.saveEstate(e)
+        estateService.saveEstate(estate);
         return "addEstatePage";
     }
     @Secured("ROLE_ADMIN")

@@ -1,8 +1,6 @@
 package hua.gr.dit.service;
 
-import hua.gr.dit.Entitties.ApplicationForView;
-import hua.gr.dit.Entitties.ApplicationOfRental;
-import hua.gr.dit.Entitties.Estate;
+import hua.gr.dit.Entitties.*;
 import hua.gr.dit.repositories.ApplicationForViewRepository;
 import hua.gr.dit.repositories.ApplicationOfRentalRepository;
 import hua.gr.dit.repositories.EstateRepository;
@@ -20,13 +18,15 @@ public class TenantService {
     private ApplicationOfRentalRepository rentalRepository;
     private EstateRepository estateRepository;
     private NotificationService notificationService;
+    private UserService userService;
 
-    public TenantService(TenantRepository tenantRepository, ApplicationForViewRepository viewRepository, ApplicationOfRentalRepository rentalRepository, EstateRepository estateRepository, NotificationService notificationService) {
-        this.tenantRepository = tenantRepository;
-        this.viewRepository = viewRepository;
-        this.rentalRepository = rentalRepository;
+    public TenantService(EstateRepository estateRepository, NotificationService notificationService, ApplicationOfRentalRepository rentalRepository, TenantRepository tenantRepository, UserService userService, ApplicationForViewRepository viewRepository) {
         this.estateRepository = estateRepository;
         this.notificationService = notificationService;
+        this.rentalRepository = rentalRepository;
+        this.tenantRepository = tenantRepository;
+        this.userService = userService;
+        this.viewRepository = viewRepository;
     }
 
     @Transactional
@@ -37,9 +37,9 @@ public class TenantService {
 
         ApplicationOfRental savedApplication = rentalRepository.save(application);
 
-        String tenantEmail = application.getTenant().getEmail();
-        String msg = "Your rental application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
-        notificationService.sendNotification(tenantEmail, msg);
+//        String tenantEmail = application.getTenant().getEmail();
+//        String msg = "Your rental application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
+//        notificationService.sendNotification(tenantEmail, msg);
 
         return savedApplication;
     }
@@ -52,9 +52,9 @@ public class TenantService {
 
         ApplicationForView savedApplication = viewRepository.save(application);
 
-        String tenantEmail = application.getTenant().getEmail();
-        String msg = "Your viewing application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
-        notificationService.sendNotification(tenantEmail, msg);
+//        String tenantEmail = application.getTenant().getEmail();
+//        String msg = "Your viewing application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
+//        notificationService.sendNotification(tenantEmail, msg);  8a to ksanabaloume
 
         return savedApplication;
     }

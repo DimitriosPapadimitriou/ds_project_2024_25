@@ -60,11 +60,11 @@ public class OwnerService {
 
         registrationRepository.save(application);
 
-        String ownerMessage = "Your application for property registration has been submitted.";
-        notificationService.sendNotification(owner.getEmail(), ownerMessage);
+//        String ownerMessage = "Your application for property registration has been submitted.";
+//        notificationService.sendNotification(owner.getEmail(), ownerMessage);
 
-        String adminMessage = "A new estate registration request has been received";
-        notificationService.sendNotification(admin.getEmail(), adminMessage);
+//        String adminMessage = "A new estate registration request has been received";
+//        notificationService.sendNotification(admin.getEmail(), adminMessage);
 
         return  application;
     }
@@ -78,6 +78,14 @@ public class OwnerService {
     }
 
     @Transactional
+    public ApplicationOfRental rejectApplicationOfRental(Integer applicationId){
+        ApplicationOfRental application = rentalRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
+        application.setStatus("Rejected");
+
+        return rentalRepository.save(application);
+    }
+
+    @Transactional
     public ApplicationForView acceptApplicationForView(Integer applicationId){
         ApplicationForView application = viewRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
         application.setStatus("Accepted");
@@ -86,8 +94,21 @@ public class OwnerService {
     }
 
     @Transactional
-    public List<ApplicationOfRental> showApplicationsOfRental() {
-        return rentalRepository.findAll();
+    public ApplicationForView rejectApplicationForView(Integer applicationId){
+        ApplicationForView application = viewRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
+        application.setStatus("Rejected");
+
+        return viewRepository.save(application);
+    }
+
+    @Transactional
+    public List<ApplicationOfRental> getApplicationsOfRental(Integer ownerId) {
+        return rentalRepository.findRentalApplicationsByOwnerId(ownerId);
+    }
+
+    @Transactional
+    public List<ApplicationForView> getApplicationsForViewing(Integer ownerId) {
+        return rentalRepository.findViewingApplicationsByOwnerId(ownerId);
     }
 
 

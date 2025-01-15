@@ -25,9 +25,9 @@ public class AdminService {
 
         registrationRepository.save(application);
 
-        String ownerEmail = application.getOwner().getEmail();
-        String message = "Your application for property registration has been accepted.";
-        notificationService.sendNotification(ownerEmail, message);
+//        String ownerEmail = application.getOwner().getEmail();
+//        String message = "Your application for property registration has been accepted.";
+//        notificationService.sendNotification(ownerEmail, message); 8a to 3anabaloume
 
 
         return application;
@@ -41,9 +41,9 @@ public class AdminService {
 
         registrationRepository.save(application);
 
-        String ownerEmail = application.getOwner().getEmail();
-        String message = "Your application for property registration has been rejected.";
-        notificationService.sendNotification(ownerEmail, message);
+//        String ownerEmail = application.getOwner().getEmail();
+//        String message = "Your application for property registration has been rejected.";
+//        notificationService.sendNotification(ownerEmail, message);
 
         return application;
     }

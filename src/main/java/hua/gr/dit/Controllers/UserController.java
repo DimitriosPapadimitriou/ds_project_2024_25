@@ -1,8 +1,14 @@
 package hua.gr.dit.Controllers;
 
+import hua.gr.dit.Entitties.Owner;
 import hua.gr.dit.Entitties.Role;
+import hua.gr.dit.Entitties.Tenant;
 import hua.gr.dit.Entitties.User;
+import hua.gr.dit.repositories.OwnerRepository;
 import hua.gr.dit.repositories.RoleRepository;
+import hua.gr.dit.repositories.TenantRepository;
+import hua.gr.dit.service.OwnerService;
+import hua.gr.dit.service.TenantService;
 import hua.gr.dit.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +21,14 @@ public class UserController {
     private UserService userService;
 
     private RoleRepository roleRepository;
+    private TenantRepository tenantRepository;
+    private OwnerRepository ownerService;
 
-    public UserController(UserService userService, RoleRepository roleRepository) {
-        this.userService = userService;
+    public UserController(OwnerRepository ownerService, RoleRepository roleRepository, TenantRepository tenantRepository, UserService userService) {
+        this.ownerService = ownerService;
         this.roleRepository = roleRepository;
+        this.tenantRepository = tenantRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/register")
@@ -29,11 +39,20 @@ public class UserController {
     }
 
 
-
     @PostMapping("/register")
     public String saveUser(@ModelAttribute User user, @RequestParam(required = false) String roleName , Model model){
         System.out.println("Roles: "+user.getRoles());
-        Integer id = userService.saveUser(user, roleName); //Edw allaksa thn sunarthsh na pairnei kai ena role Name gia ton rolo pou theloume
+        Integer id = userService.saveUser(user, roleName);
+        if("ROLE_TENANT".equals(roleName)){
+            Tenant tenant = new Tenant();
+            tenant.setUser(user);
+            tenantRepository.save(tenant);
+        }
+        if("ROLE_OWNER".equals(roleName)){
+            Owner owner = new Owner();
+            owner.setUser(user);
+            ownerService.save(owner);
+        }
         String message = "User '"+id+"' saved successfully !";
         model.addAttribute("msg", message);
         return "index";
