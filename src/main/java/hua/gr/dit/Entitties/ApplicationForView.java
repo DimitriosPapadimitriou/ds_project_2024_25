@@ -1,10 +1,9 @@
-//package hua.ds_project.project.entities;
 package hua.gr.dit.Entitties;
 import jakarta.persistence.*;
 
 @Entity
 @Table
-public class ApplicationForView {
+public class    ApplicationForView {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "estate_id")

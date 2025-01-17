@@ -1,4 +1,3 @@
-//package hua.ds_project.project.entities;
 package hua.gr.dit.Entitties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

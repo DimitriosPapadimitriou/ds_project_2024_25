@@ -7,7 +7,6 @@ import hua.gr.dit.Entitties.Estate;
 import hua.gr.dit.service.AdminService;
 import hua.gr.dit.service.OwnerService;
 import hua.gr.dit.service.TenantService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;

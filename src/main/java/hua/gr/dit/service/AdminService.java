@@ -1,6 +1,7 @@
 package hua.gr.dit.service;
 
 import hua.gr.dit.Entitties.ApplicationForRegistration;
+import hua.gr.dit.Entitties.User;
 import hua.gr.dit.repositories.ApplicationForRegistrationRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,14 @@ public class AdminService {
 
         registrationRepository.save(application);
 
-//        String ownerEmail = application.getOwner().getEmail();
-//        String message = "Your application for property registration has been accepted.";
-//        notificationService.sendNotification(ownerEmail, message); 8a to 3anabaloume
+        User ownerUser = application.getOwner().getUser();
+        if(ownerUser != null) {
+            String ownerEmail = ownerUser.getEmail();
+            String message = "Your application for property registration has been accepted.";
+            notificationService.sendNotification(ownerEmail, message);
+        } else {
+            throw new RuntimeException("Associated User for Owner not found. Unable to send notification.");
+        }
 
 
         return application;
@@ -41,9 +47,14 @@ public class AdminService {
 
         registrationRepository.save(application);
 
-//        String ownerEmail = application.getOwner().getEmail();
-//        String message = "Your application for property registration has been rejected.";
-//        notificationService.sendNotification(ownerEmail, message);
+        User ownerUser = application.getOwner().getUser();
+        if(ownerUser != null) {
+            String ownerEmail = ownerUser.getEmail();
+            String message = "Your application for property registration has been rejected.";
+            notificationService.sendNotification(ownerEmail, message);
+        } else {
+            throw new RuntimeException("Associated User for Owner not found. Unable to send notification.");
+        }
 
         return application;
     }

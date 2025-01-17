@@ -90,4 +90,5 @@ public class UserService implements UserDetailsService {
     public void updateOrInsertRole(Role role) {
         roleRepository.updateOrInsert(role);
     }
+
 }

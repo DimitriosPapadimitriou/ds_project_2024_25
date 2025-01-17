@@ -37,9 +37,11 @@ public class TenantService {
 
         ApplicationOfRental savedApplication = rentalRepository.save(application);
 
-//        String tenantEmail = application.getTenant().getEmail();
-//        String msg = "Your rental application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
-//        notificationService.sendNotification(tenantEmail, msg);
+        User tenantUser = application.getTenant().getUser();
+        String tenantEmail = tenantUser.getEmail();
+        String msg = "Your rental application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
+        notificationService.sendNotification(tenantEmail, msg);
+
 
         return savedApplication;
     }
@@ -52,9 +54,10 @@ public class TenantService {
 
         ApplicationForView savedApplication = viewRepository.save(application);
 
-//        String tenantEmail = application.getTenant().getEmail();
-//        String msg = "Your viewing application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
-//        notificationService.sendNotification(tenantEmail, msg);  8a to ksanabaloume
+        User tenantUser = application.getTenant().getUser();
+        String tenantEmail = tenantUser.getEmail();
+        String msg = "Your viewing application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
+        notificationService.sendNotification(tenantEmail, msg);
 
         return savedApplication;
     }

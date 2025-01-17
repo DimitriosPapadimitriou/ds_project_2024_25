@@ -60,11 +60,24 @@ public class OwnerService {
 
         registrationRepository.save(application);
 
-//        String ownerMessage = "Your application for property registration has been submitted.";
-//        notificationService.sendNotification(owner.getEmail(), ownerMessage);
 
-//        String adminMessage = "A new estate registration request has been received";
-//        notificationService.sendNotification(admin.getEmail(), adminMessage);
+        User ownerUser = application.getOwner().getUser();
+        if(ownerUser != null) {
+            String ownerEmail = ownerUser.getEmail();
+            String ownerMessage = "Your application for property registration has been submitted.";
+            notificationService.sendNotification(ownerEmail, ownerMessage);
+        } else {
+            throw new RuntimeException("Associated User for Owner not found. Unable to send notification.");
+        }
+
+        User adminUser = application.getOwner().getUser();
+        if(adminUser != null) {
+            String adminEmail = adminUser.getEmail();
+            String adminMessage = "A new estate registration request has been received";
+            notificationService.sendNotification(adminEmail, adminMessage);
+        }else {
+            throw new RuntimeException("Associated User for Admin not found. Unable to send notification.");
+        }
 
         return  application;
     }

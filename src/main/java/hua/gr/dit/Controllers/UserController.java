@@ -71,16 +71,6 @@ public class UserController {
         return "auth/user";
     }
 
-//    @PostMapping("/user/{user_id}")
-//    public String saveStudent(@PathVariable Integer user_id, @ModelAttribute("user") User user, Model model) {
-//        User the_user = (User) userService.getUser(user_id);
-//        the_user.setEmail(user.getEmail());
-//        the_user.setUserName(user.getUserName());
-//        userService.updateUser(the_user);
-//        model.addAttribute("users", userService.getUsers());
-//        return "auth/users";
-//    }
-
     @GetMapping("/user/role/delete/{user_id}/{role_id}")
     public String deleteRolefromUser(@PathVariable Integer user_id, @PathVariable Integer role_id, Model model){
         User user = (User) userService.getUser(user_id);
