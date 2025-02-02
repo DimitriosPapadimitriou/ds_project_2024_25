@@ -1,21 +1,22 @@
 package hua.gr.dit.Controllers;
 
-import hua.gr.dit.Entitties.ApplicationForRegistration;
-import hua.gr.dit.Entitties.ApplicationForView;
-import hua.gr.dit.Entitties.ApplicationOfRental;
-import hua.gr.dit.Entitties.Estate;
+import hua.gr.dit.Entitties.*;
+import hua.gr.dit.Entitties.User;
+import hua.gr.dit.repositories.UserRepository;
 import hua.gr.dit.service.AdminService;
 import hua.gr.dit.service.OwnerService;
 import hua.gr.dit.service.TenantService;
+import hua.gr.dit.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/applications")
@@ -24,11 +25,13 @@ public class ApplicationController {
     private OwnerService ownerService;
     private TenantService tenantService;
     private AdminService adminService;
+    private UserService userService;
 
-    public ApplicationController(OwnerService ownerService, TenantService tenantService, AdminService adminService) {
+    public ApplicationController(AdminService adminService, OwnerService ownerService, TenantService tenantService, UserService userService) {
+        this.adminService = adminService;
         this.ownerService = ownerService;
         this.tenantService = tenantService;
-        this.adminService = adminService;
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -37,16 +40,41 @@ public class ApplicationController {
     }
 
     @Secured("ROLE_OWNER")
-    @GetMapping("/registration/new")
-    public String addApplicationForRegistration(Model model, Integer adminId, Integer ownerId, Estate estate){
-        model.addAttribute("application", ownerService.submitApplicationForRegistration(adminId, ownerId, estate));
+    @GetMapping("/registrationnew")
+    public String addApplicationForRegistration(Model model){
+        model.addAttribute("application", new ApplicationForRegistration());
         return "AddApplicationForRegistrationPage";
     }
 
     @Secured("ROLE_OWNER")
     @PostMapping("/registration/new")
-    public String saveApplicationForRegistration(Model model, Integer adminId, Integer ownerId, Estate estate){
-        model.addAttribute("application", ownerService.submitApplicationForRegistration(adminId, ownerId, estate));
+    public String saveApplicationForRegistration(Model model, @ModelAttribute("ApplicationForRegistration") ApplicationForRegistration applicationForRegistration){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // Assuming username is unique
+
+//         Retrieve the full user entity (assuming you have a UserService)
+//        Optional<User> loggedInUser = userRepository.findByUsername(username);
+//        User user = loggedInUser.get();
+//        Integer ownerId = user.getOwner().getId();
+
+        Estate estate = new Estate(
+                15,                    // id
+                10,                    // squareMeters
+                "estate",              // typeOfEstate
+                "address",             // address
+                "area",                // area
+                123,                   // ageOfConstruction
+                123,                   // duration
+                123.0f,                // price (as Float)
+                "1st floor",           // floor (as String)
+                3,                     // amountOfRooms
+                "heat",                // typeOfHeating
+                false,                 // parking
+                true,                  // availability
+                "wefwef",              // description
+                "wtwf"                 // lastUpdated
+        );
+        ownerService.submitApplicationForRegistration(9, 1, estate);
         return "AddApplicationForRegistrationPage";
     }
 
@@ -63,16 +91,35 @@ public class ApplicationController {
     @GetMapping("/rental")
     public String applicationForRental(Model model){
         ApplicationOfRental rental = new ApplicationOfRental();
+
         model.addAttribute("application", tenantService.submitRentalApplication(rental));
         return "ApplicationForRentalPage";
     }
 
     @Secured("ROLE_TENANT")
-    @GetMapping("/view")
+    @GetMapping("/view/new")
     public String applicationForView(Model model){
         ApplicationForView view = new ApplicationForView();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // Retrieve the username from the principal
+
+        // Fetch the tenant using the username
+        Tenant tenant = userService.getTenantByUsername(username);
+
+        view.setTenant(tenant);
         model.addAttribute("application", tenantService.submitViewingApplication(view));
-        return "ApplicationForRentalPage";
+        return "ApplicationForViewPage";
+    }
+
+    @Secured("ROLE_TENANT")
+    @PostMapping("/view/new")
+    public String handleApplicationForView(@ModelAttribute("application") ApplicationForView applicationForView, Model model) {
+        tenantService.submitViewingApplication(applicationForView);
+        model.addAttribute("successMessage", "Application submitted successfully!");
+
+        // Redirect or return a success page
+        return "redirect:/success"; // Redirect to a success page
     }
 
     @Secured("ROLE_ADMIN")

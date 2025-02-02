@@ -1,6 +1,7 @@
 package hua.gr.dit.service;
 
 import hua.gr.dit.Entitties.Role;
+import hua.gr.dit.Entitties.Tenant;
 import hua.gr.dit.Entitties.User;
 import hua.gr.dit.repositories.RoleRepository;
 import hua.gr.dit.repositories.UserRepository;
@@ -30,6 +31,13 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public Tenant getTenantByUsername(String username) {
+        System.out.println("DEBUG: Searching for username: " + username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("No user found with username: " + username))
+                .getTenant();
     }
 
     @Transactional

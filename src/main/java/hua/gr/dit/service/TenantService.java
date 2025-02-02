@@ -29,6 +29,12 @@ public class TenantService {
         this.viewRepository = viewRepository;
     }
 
+    public Tenant findTenantById(Integer id) {
+        // Fetch tenant from the repository
+        return tenantRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No tenant found with id: " + id));
+    }
+
     @Transactional
     public ApplicationOfRental submitRentalApplication(ApplicationOfRental application) {
         if (application.getTenant() == null) {
