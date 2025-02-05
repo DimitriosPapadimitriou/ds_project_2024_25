@@ -7,16 +7,16 @@ import hua.gr.dit.service.AdminService;
 import hua.gr.dit.service.OwnerService;
 import hua.gr.dit.service.TenantService;
 import hua.gr.dit.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/applications")
@@ -26,11 +26,14 @@ public class ApplicationController {
     private TenantService tenantService;
     private AdminService adminService;
     private UserService userService;
+    private UserRepository userRepository;
 
-    public ApplicationController(AdminService adminService, OwnerService ownerService, TenantService tenantService, UserService userService) {
+    @Autowired
+    public ApplicationController(AdminService adminService, OwnerService ownerService, TenantService tenantService, UserRepository userRepository, UserService userService) {
         this.adminService = adminService;
         this.ownerService = ownerService;
         this.tenantService = tenantService;
+        this.userRepository = userRepository;
         this.userService = userService;
     }
 
@@ -40,50 +43,46 @@ public class ApplicationController {
     }
 
     @Secured("ROLE_OWNER")
-    @GetMapping("/registrationnew")
+    @GetMapping("/registration/new")
     public String addApplicationForRegistration(Model model){
         model.addAttribute("application", new ApplicationForRegistration());
-        return "AddApplicationForRegistrationPage";
+        return "ApplicationForRegistrationPage";
     }
 
     @Secured("ROLE_OWNER")
     @PostMapping("/registration/new")
-    public String saveApplicationForRegistration(Model model, @ModelAttribute("ApplicationForRegistration") ApplicationForRegistration applicationForRegistration){
+    public String saveApplicationForRegistration(Model model, @ModelAttribute("ApplicationForRegistration") ApplicationForRegistration application){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // Assuming username is unique
+        String username = authentication.getName();
 
-//         Retrieve the full user entity (assuming you have a UserService)
-//        Optional<User> loggedInUser = userRepository.findByUsername(username);
-//        User user = loggedInUser.get();
-//        Integer ownerId = user.getOwner().getId();
+        System.out.println("DEBUG: saveApplicationForRegistration method called.");
+        System.out.println("Application Details: " + application);
 
-        Estate estate = new Estate(
-                15,                    // id
-                10,                    // squareMeters
-                "estate",              // typeOfEstate
-                "address",             // address
-                "area",                // area
-                123,                   // ageOfConstruction
-                123,                   // duration
-                123.0f,                // price (as Float)
-                "1st floor",           // floor (as String)
-                3,                     // amountOfRooms
-                "heat",                // typeOfHeating
-                false,                 // parking
-                true,                  // availability
-                "wefwef",              // description
-                "wtwf"                 // lastUpdated
-        );
-        ownerService.submitApplicationForRegistration(9, 1, estate);
-        return "AddApplicationForRegistrationPage";
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        Integer ownerId = user.getOwner().getId();
+
+        Integer adminId = 1;
+
+        System.out.println("DEBUG: Calling ownerService.saveApplication()...");
+
+        ownerService.saveApplication(application);
+
+        System.out.println("DEBUG: Application saved. ID: " + application.getApplicationID());
+
+
+//        ownerService.submitApplicationForRegistration(adminId, ownerId);
+
+
+
+        return "ApplicationForRegistrationPage";
     }
-
 
 
     @Secured("ROLE_OWNER")
     @GetMapping("/registration/{id}")
     public String applicationForRegistration(Model model, Integer adminId, Integer ownerId, Estate estate){
-        model.addAttribute("application", ownerService.submitApplicationForRegistration(adminId, ownerId, estate));
+        model.addAttribute("application", ownerService.submitApplicationForRegistration(adminId, ownerId));
         return "ApplicationForRegistrationPage";
     }
 

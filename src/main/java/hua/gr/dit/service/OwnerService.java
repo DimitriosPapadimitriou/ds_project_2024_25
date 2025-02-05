@@ -1,8 +1,10 @@
 package hua.gr.dit.service;
 
+import hua.gr.dit.Application;
 import hua.gr.dit.Entitties.*;
 import hua.gr.dit.repositories.*;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +17,18 @@ public class OwnerService {
     private ApplicationForViewRepository viewRepository;
     private ApplicationOfRentalRepository rentalRepository;
     private ApplicationForRegistrationRepository registrationRepository;
-
     private NotificationService notificationService;
     private AdminRepository adminRepository;
 
-    public OwnerService(OwnerRepository ownerRepository, EstateRepository estateRepository, ApplicationForViewRepository viewRepository, ApplicationOfRentalRepository rentalRepository, ApplicationForRegistrationRepository registrationRepository, NotificationService notificationService, AdminRepository adminRepository) {
-        this.ownerRepository = ownerRepository;
-        this.estateRepository = estateRepository;
-        this.viewRepository = viewRepository;
-        this.rentalRepository = rentalRepository;
-        this.registrationRepository = registrationRepository;
-        this.notificationService = notificationService;
+    @Autowired
+    public OwnerService(AdminRepository adminRepository, EstateRepository estateRepository, NotificationService notificationService, OwnerRepository ownerRepository, ApplicationForRegistrationRepository registrationRepository, ApplicationOfRentalRepository rentalRepository, ApplicationForViewRepository viewRepository) {
         this.adminRepository = adminRepository;
+        this.estateRepository = estateRepository;
+        this.notificationService = notificationService;
+        this.ownerRepository = ownerRepository;
+        this.registrationRepository = registrationRepository;
+        this.rentalRepository = rentalRepository;
+        this.viewRepository = viewRepository;
     }
 
     @Transactional
@@ -47,18 +49,29 @@ public class OwnerService {
         return ownerRepository.save(owner);
     }
 
+    public void saveApplication(ApplicationForRegistration application) {
+
+        System.out.println("DEBUG: Saving application to database...");
+        registrationRepository.save(application);
+        System.out.println("DEBUG: Application saved successfully.");
+
+    }
+
+
     @Transactional
-    public ApplicationForRegistration submitApplicationForRegistration(Integer adminId, Integer ownerId, Estate estate){
+    public ApplicationForRegistration submitApplicationForRegistration(Integer adminId, Integer ownerId){ // Estate estate
         Owner owner = ownerRepository.findById(ownerId).orElseThrow( () -> new RuntimeException("Owner with the following ID not found:" + ownerId));
         Admin admin = adminRepository.findById(adminId).orElseThrow( () -> new RuntimeException("Admin with the following ID not found:" + adminId));
 
         ApplicationForRegistration application = new ApplicationForRegistration();
 
         application.setOwner(owner);
-        application.setEstate(estate);
+//        application.setEstate(estate);
         application.setStatus("Pending");
 
-        registrationRepository.save(application);
+        System.out.println("DEBUG: Saving application to database...");
+        ApplicationForRegistration savedApplication = registrationRepository.save(application);
+        System.out.println("DEBUG: Application saved with ID: " + savedApplication.getApplicationID());
 
 
         User ownerUser = application.getOwner().getUser();

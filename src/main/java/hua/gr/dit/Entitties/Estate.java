@@ -14,8 +14,8 @@ public class Estate {
     private Owner owner;
 
 
-    @OneToOne(mappedBy = "estate", cascade = CascadeType.ALL)
-    private ApplicationForRegistration registration;
+//    @OneToOne(mappedBy = "estate", cascade = CascadeType.ALL)
+//    private ApplicationForRegistration registration;
 
     @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL)
     private List<ApplicationForView> views = new ArrayList<>();

@@ -2,12 +2,12 @@ package hua.gr.dit.Entitties;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "application_for_registration")
 public class ApplicationForRegistration {
 
-    @OneToOne
-    @JoinColumn(name = "estate_id")
-    private Estate estate;
+//    @OneToOne
+//    @JoinColumn(name = "estate_id")
+//    private Estate estate;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "admin_id")
@@ -17,9 +17,6 @@ public class ApplicationForRegistration {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @Column
-    private String status;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -27,9 +24,6 @@ public class ApplicationForRegistration {
 
     @Column
     private String documents;
-
-    @Column
-    private String date;
 
     @Column
     private String properties;
@@ -70,39 +64,40 @@ public class ApplicationForRegistration {
     @Column
     private String description;
 
+    @Column
+    private String status;
 
-    public ApplicationForRegistration(Estate estate, Admin admin, Owner owner, String status, Integer applicationID, String documents, String date, String properties, Integer squareMeters, String typeOfEstate, String address, String area, Integer ageOfConstruction, Integer duration, Integer price, String floor, Integer amountOfRooms, String typeOfHeating, Boolean parking, String description) {
-        this.estate = estate;
+
+    public ApplicationForRegistration(String address, Admin admin, Integer ageOfConstruction, Integer amountOfRooms, Integer applicationID, String area, String description, String documents, Integer duration, String floor, Owner owner, Boolean parking, Integer price, String properties, Integer squareMeters, String status, String typeOfEstate, String typeOfHeating) {
+        this.address = address;
         this.admin = admin;
-        this.owner = owner;
-        this.status = status;
+        this.ageOfConstruction = ageOfConstruction;
+        this.amountOfRooms = amountOfRooms;
         this.applicationID = applicationID;
+        this.area = area;
+        this.description = description;
         this.documents = documents;
-        this.date = date;
+        this.duration = duration;
+        this.floor = floor;
+        this.owner = owner;
+        this.parking = parking;
+        this.price = price;
         this.properties = properties;
         this.squareMeters = squareMeters;
+        this.status = status;
         this.typeOfEstate = typeOfEstate;
-        this.address = address;
-        this.area = area;
-        this.ageOfConstruction = ageOfConstruction;
-        this.duration = duration;
-        this.price = price;
-        this.floor = floor;
-        this.amountOfRooms = amountOfRooms;
         this.typeOfHeating = typeOfHeating;
-        this.parking = parking;
-        this.description = description;
     }
 
     public ApplicationForRegistration() {
     }
 
-    public Estate getEstate() {
-        return estate;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEstate(Estate estate) {
-        this.estate = estate;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Admin getAdmin() {
@@ -121,13 +116,6 @@ public class ApplicationForRegistration {
         this.owner = owner;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public Integer getApplicationID() {
         return applicationID;
@@ -143,14 +131,6 @@ public class ApplicationForRegistration {
 
     public void setDocuments(String documents) {
         this.documents = documents;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getProperties() {
@@ -257,25 +237,4 @@ public class ApplicationForRegistration {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicationForRegistration{" +
-                "applicationID=" + applicationID +
-                ", documents='" + documents + '\'' +
-                ", date='" + date + '\'' +
-                ", properties='" + properties + '\'' +
-                ", squareMeters=" + squareMeters +
-                ", typeOfEstate='" + typeOfEstate + '\'' +
-                ", address='" + address + '\'' +
-                ", area='" + area + '\'' +
-                ", ageOfConstruction=" + ageOfConstruction +
-                ", duration=" + duration +
-                ", price=" + price +
-                ", floor='" + floor + '\'' +
-                ", amountOfRooms=" + amountOfRooms +
-                ", typeOfHeating='" + typeOfHeating + '\'' +
-                ", parking=" + parking +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

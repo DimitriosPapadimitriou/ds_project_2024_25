@@ -77,12 +77,16 @@
             </span>
             <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1">New Application</h3>
             <div class="u-form u-login-control u-radius u-white u-form-1">
-              <form th:action="@{applications/registration/new}" th:object="${application}" class="u-clearfix u-form-custom-backend u-form-spacing-15 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 36px;" method="post">
+              <form th:action="@{/applications/registration/new}" th:object="${application}" class="u-clearfix u-form-custom-backend u-form-spacing-15 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 36px;" method="post">
                 <div class="u-form-group u-form-partition-factor-2 u-form-group-1">
                   <label for="text-292f" class="u-label">Address *</label>
-                  <input type="text" th:field="*{address}" id="documents" placeholder="Enter Your Address" id="text-292f" name="text-1" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1" required="required">
+                  <input type="text" th:field="*{address}" placeholder="Enter Your Address" id="text-292f" name="text-1" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1" required="required">
                 </div>
-                <div class="u-form-group u-form-partition-factor-2 u-form-password">
+                  <div class="u-form-group u-form-name u-form-partition-factor-2">
+                      <label for="username-a30d" class="u-label">Floor *</label>
+                      <input type="number" th:field="*{floor}" placeholder="Enter the floor number" id="username-a30d" name="username" class="u-grey-5 u-input u-input-rectangle u-radius u-input-4" required="">
+                  </div>
+                  <div class="u-form-group u-form-partition-factor-2 u-form-password">
                   <label for="password-a30d" class="u-label">Area *</label>
                   <input type="text" th:field="*{area}" placeholder="Enter your Password" id="password-a30d" name="password" class="u-grey-5 u-input u-input-rectangle u-radius u-input-2" required="">
                 </div>
@@ -92,11 +96,11 @@
                 </div>
                 <div class="u-form-group u-form-name u-form-partition-factor-2">
                   <label for="username-a30d" class="u-label">Amount Of Rooms *</label>
-                  <input type="text" th:field="*{amountOfRooms}" placeholder="Enter your Username" id="username-a30d" name="username" class="u-grey-5 u-input u-input-rectangle u-radius u-input-4" required="">
+                  <input type="number" th:field="*{amountOfRooms}" placeholder="Enter your Username" id="username-a30d" name="username" class="u-grey-5 u-input u-input-rectangle u-radius u-input-4" required="">
                 </div>
                 <div class="u-form-group u-form-group-5">
                   <label for="text-c2ef" class="u-label">Duration *</label>
-                  <input type="text" th:field="*{duration}" placeholder="Enter Your Rental Duration" id="text-c2ef" name="text-2" class="u-grey-5 u-input u-input-rectangle u-radius u-input-5" required="required">
+                  <input type="number" th:field="*{duration}" placeholder="Enter Your Rental Duration" id="text-c2ef" name="text-2" class="u-grey-5 u-input u-input-rectangle u-radius u-input-5" required="required">
                 </div>
                 <div class="u-form-group u-form-group-6">
                   <label for="text-fd49" class="u-label">Properties</label>
@@ -142,7 +146,7 @@
                 <div class="u-form-group u-form-select u-form-group-12">
                   <label for="select-7b09" class="u-label">Type Of Heating</label>
                   <div class="u-form-select-wrapper">
-                      <select id="select-7b09" th:field="*{typeOfHeating}" id="typeOfHeating" class="u-grey-5 u-input u-input-rectangle u-radius u-input-15">
+                      <select th:field="*{typeOfHeating}" id="typeOfHeating" class="u-grey-5 u-input u-input-rectangle u-radius u-input-15">
                           <option value="Central Heating">Central Heating</option>
                           <option value="District Heating">District Heating</option>
                           <option value="Electric Heating">Electric Heating</option>
@@ -155,14 +159,12 @@
                   <input type="checkbox" th:field="*{parking}" id="checkbox" name="checkbox" value="On" class="u-field-input">
                   <label for="checkbox" class="u-field-label">Parking</label>
                 </div>
-
                 <div class="u-form-group u-form-textarea u-form-group-15">
                   <label for="textarea-538c" class="u-label">Description</label>
                   <textarea rows="4" th:field="*{description}" cols="50" id="textarea-538c" name="textarea" class="u-grey-5 u-input u-input-rectangle u-radius u-input-16" required=""></textarea>
                 </div>
-
                 <div class="u-align-right u-form-group u-form-submit">
-                  <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-1-light-1 u-radius u-btn-1">Login</a>
+                  <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-1-light-1 u-radius u-btn-1">Submit</a>
                   <input type="submit" value="submit" class="u-form-control-hidden">
                 </div>
                 <input type="hidden" value="" name="recaptchaResponse">

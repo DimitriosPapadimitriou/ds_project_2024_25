@@ -22,7 +22,7 @@ public class AdminService {
         ApplicationForRegistration application = registrationRepository.findById(applicationId)
                 .orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
 
-        application.setStatus("Accepted");
+//        application.setStatus("Accepted");
 
         registrationRepository.save(application);
 
@@ -43,7 +43,7 @@ public class AdminService {
         ApplicationForRegistration application = registrationRepository.findById(applicationId)
                 .orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
 
-        application.setStatus("Rejected");
+//        application.setStatus("Rejected");
 
         registrationRepository.save(application);
 
