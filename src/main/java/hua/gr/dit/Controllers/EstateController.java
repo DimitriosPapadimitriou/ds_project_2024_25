@@ -21,11 +21,14 @@ public class EstateController {
         this.estateService = estateService;
     }
 
+
+
     @GetMapping()
     public String estatePage(Model model){
         model.addAttribute("estates", estateService.getAllEstates());
         return "EstatePage";
     }
+
 
     @GetMapping("/{id}")
     public String showEstate(@PathVariable int id, Model model){

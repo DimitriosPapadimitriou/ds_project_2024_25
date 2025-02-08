@@ -37,24 +37,17 @@ public class ApplicationOfRental {
     @Column
     private Integer rent;
 
-    @Column
-    private Integer tenantID;
 
-    @Column
-    private Integer ownerID;
-
-    public ApplicationOfRental(Estate estate, Tenant tenant, Owner owner, Integer applicationID, String status, String date, String description, String duration, Integer rent, Integer tenantID, Integer ownerID) {
-        this.estate = estate;
-        this.tenant = tenant;
-        this.owner = owner;
+    public ApplicationOfRental(Integer applicationID, String date, String description, String duration, Estate estate, Owner owner, Integer rent, String status, Tenant tenant) {
         this.applicationID = applicationID;
-        this.status = status;
         this.date = date;
         this.description = description;
         this.duration = duration;
+        this.estate = estate;
+        this.owner = owner;
         this.rent = rent;
-        this.tenantID = tenantID;
-        this.ownerID = ownerID;
+        this.status = status;
+        this.tenant = tenant;
     }
 
     public ApplicationOfRental() {
@@ -132,32 +125,6 @@ public class ApplicationOfRental {
         this.rent = rent;
     }
 
-    public Integer getTenantID() {
-        return tenantID;
-    }
 
-    public void setTenantID(Integer tenantID) {
-        this.tenantID = tenantID;
-    }
 
-    public Integer getOwnerID() {
-        return ownerID;
-    }
-
-    public void setOwnerID(Integer ownerID) {
-        this.ownerID = ownerID;
-    }
-
-    @Override
-    public String toString() {
-        return "ApplicationOfRental{" +
-                "applicationID=" + applicationID +
-                ", date='" + date + '\'' +
-                ", description='" + description + '\'' +
-                ", duration='" + duration + '\'' +
-                ", rent=" + rent +
-                ", tenantID=" + tenantID +
-                ", ownerID=" + ownerID +
-                '}';
-    }
 }

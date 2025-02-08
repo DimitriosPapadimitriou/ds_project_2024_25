@@ -13,6 +13,6 @@ public class AuthController {
 
     @GetMapping()
     public String login() {
-        return "login";
+        return "Login";
     }
 }

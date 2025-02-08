@@ -55,8 +55,7 @@ public class Estate {
 
     private String lastUpdated;
 
-    public Estate(Integer id, Integer squareMeters, String typeOfEstate, String address, String area, Integer ageOfConstruction, Integer duration, Float price, String floor, Integer amountOfRooms, String typeOfHeating, Boolean parking, Boolean availability, String description, String lastUpdated) {
-        this.id = id;
+    public Estate(Integer squareMeters, String typeOfEstate, String address, String area, Integer ageOfConstruction, Integer duration, Float price, String floor, Integer amountOfRooms, String typeOfHeating, Boolean parking, Boolean availability, String description, String lastUpdated) {
         this.squareMeters = squareMeters;
         this.typeOfEstate = typeOfEstate;
         this.address = address;

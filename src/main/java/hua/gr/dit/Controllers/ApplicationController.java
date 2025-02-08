@@ -2,21 +2,22 @@ package hua.gr.dit.Controllers;
 
 import hua.gr.dit.Entitties.*;
 import hua.gr.dit.Entitties.User;
+import hua.gr.dit.repositories.AdminRepository;
+import hua.gr.dit.repositories.EstateRepository;
 import hua.gr.dit.repositories.UserRepository;
 import hua.gr.dit.service.AdminService;
 import hua.gr.dit.service.OwnerService;
 import hua.gr.dit.service.TenantService;
 import hua.gr.dit.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/applications")
@@ -25,16 +26,17 @@ public class ApplicationController {
     private OwnerService ownerService;
     private TenantService tenantService;
     private AdminService adminService;
-    private UserService userService;
+    private AdminRepository adminRepository;
     private UserRepository userRepository;
+    private EstateRepository estateRepository;
 
-    @Autowired
-    public ApplicationController(AdminService adminService, OwnerService ownerService, TenantService tenantService, UserRepository userRepository, UserService userService) {
-        this.adminService = adminService;
-        this.ownerService = ownerService;
-        this.tenantService = tenantService;
+    public ApplicationController(UserRepository userRepository, TenantService tenantService, OwnerService ownerService, EstateRepository estateRepository, AdminService adminService, AdminRepository adminRepository) {
         this.userRepository = userRepository;
-        this.userService = userService;
+        this.tenantService = tenantService;
+        this.ownerService = ownerService;
+        this.estateRepository = estateRepository;
+        this.adminService = adminService;
+        this.adminRepository = adminRepository;
     }
 
     @GetMapping()
@@ -42,6 +44,8 @@ public class ApplicationController {
         return "ApplicationPage";
     }
 
+
+    //--------------- Registration Form----------------------
     @Secured("ROLE_OWNER")
     @GetMapping("/registration/new")
     public String addApplicationForRegistration(Model model){
@@ -49,77 +53,137 @@ public class ApplicationController {
         return "ApplicationForRegistrationPage";
     }
 
+
     @Secured("ROLE_OWNER")
     @PostMapping("/registration/new")
     public String saveApplicationForRegistration(Model model, @ModelAttribute("ApplicationForRegistration") ApplicationForRegistration application){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String email = authentication.getName();
 
-        System.out.println("DEBUG: saveApplicationForRegistration method called.");
         System.out.println("Application Details: " + application);
 
+        User user = userRepository.findByEmail(email);
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-        Integer ownerId = user.getOwner().getId();
+        if (user.getOwner() == null) {
+            throw new IllegalStateException("User does not have an associated Owner entity.");
+        }
+        System.out.println("DEBUG: owner ID" + user.getId());
 
-        Integer adminId = 1;
+        List<Admin> admins = adminRepository.findAll();
+        if (admins.isEmpty()) {
+            throw new IllegalStateException("No admins are available to assign.");
+        }
+        Admin randomAdmin = getRandomAdmin(admins);
 
-        System.out.println("DEBUG: Calling ownerService.saveApplication()...");
 
-        ownerService.saveApplication(application);
-
+        ownerService.submitApplicationForRegistration(application,randomAdmin.getId(), user.getId());
         System.out.println("DEBUG: Application saved. ID: " + application.getApplicationID());
 
 
-//        ownerService.submitApplicationForRegistration(adminId, ownerId);
-
-
-
         return "ApplicationForRegistrationPage";
     }
 
-
-    @Secured("ROLE_OWNER")
-    @GetMapping("/registration/{id}")
-    public String applicationForRegistration(Model model, Integer adminId, Integer ownerId, Estate estate){
-        model.addAttribute("application", ownerService.submitApplicationForRegistration(adminId, ownerId));
-        return "ApplicationForRegistrationPage";
+    private Admin getRandomAdmin(List<Admin> admins) {
+        Random random = new Random();
+        int index = random.nextInt(admins.size());
+        return admins.get(index);
     }
+
 
     @Secured("ROLE_TENANT")
-    @GetMapping("/rental")
-    public String applicationForRental(Model model){
-        ApplicationOfRental rental = new ApplicationOfRental();
+    @GetMapping("/rental/new/{estateID}")
+    public String applicationOfRental(Model model, @PathVariable("estateID") Integer estateID){
+        Estate estate = estateRepository.findById(estateID)
+                .orElseThrow(() -> new RuntimeException("Estate not found"));
+        model.addAttribute("application", new ApplicationOfRental());
+        model.addAttribute("estate", estate);
+        System.out.println("DEBUG: ESTATE:" + estate);
 
-        model.addAttribute("application", tenantService.submitRentalApplication(rental));
         return "ApplicationForRentalPage";
     }
 
+
     @Secured("ROLE_TENANT")
-    @GetMapping("/view/new")
-    public String applicationForView(Model model){
-        ApplicationForView view = new ApplicationForView();
+    @PostMapping("/rental/new/{estateID}") // /rental/new/{estateId}
+    public String handleApplicationOfRental(Model model,
+                                            @PathVariable("estateID") Integer estateID,
+                                            @ModelAttribute("application") ApplicationOfRental application) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // Retrieve the username from the principal
+        String email = authentication.getName();
 
-        // Fetch the tenant using the username
-        Tenant tenant = userService.getTenantByUsername(username);
+        System.out.println("Application Details: " + application);
 
-        view.setTenant(tenant);
-        model.addAttribute("application", tenantService.submitViewingApplication(view));
-        return "ApplicationForViewPage";
-    }
 
-    @Secured("ROLE_TENANT")
-    @PostMapping("/view/new")
-    public String handleApplicationForView(@ModelAttribute("application") ApplicationForView applicationForView, Model model) {
-        tenantService.submitViewingApplication(applicationForView);
+        User user = userRepository.findByEmail(email);
+
+        if (user.getTenant() == null) {
+            throw new IllegalStateException("User does not have an associated Tenant entity.");
+        }
+
+        System.out.println("DEBUG: tenant ID" + user.getId());
+
+        application.setTenant(user.getTenant());
+        application.setEstate(estateRepository.findById(estateID)
+                .orElseThrow(() -> new RuntimeException("Estate not found")));
+
+
+        tenantService.submitRentalApplication(application);
         model.addAttribute("successMessage", "Application submitted successfully!");
 
-        // Redirect or return a success page
-        return "redirect:/success"; // Redirect to a success page
+        return "redirect:/"; // Redirect to a success page
     }
+
+//----------------- View Application Form -------------------------
+
+    @Secured("ROLE_TENANT")
+    @GetMapping("/view/new/{estateID}")
+    public String applicationForView(@PathVariable("estateID") Integer estateID, Model model){
+        Estate estate = estateRepository.findById(estateID)
+                .orElseThrow(() -> new RuntimeException("Estate not found"));
+        model.addAttribute("application", new ApplicationForView());
+        model.addAttribute("estate", estate);
+        System.out.println("DEBUG: ESTATE:" + estate);
+        return "ApplicationForView";
+    }
+
+
+    @Secured("ROLE_TENANT")
+    @PostMapping("/view/new/{estateID}")
+    public String handleApplicationForView( Model model,
+                                            @ModelAttribute("application") ApplicationForView application,
+                                            @PathVariable("estateID") Integer estateID) {
+
+        System.out.println("POST /view/new/" + estateID);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        System.out.println("Application Details: " + application);
+        System.out.println("Application Details: " + application);
+
+
+        User user = userRepository.findByEmail(email);
+
+        if (user.getTenant() == null) {
+            throw new IllegalStateException("User does not have an associated Tenant entity.");
+        }
+
+        application.setTenant(user.getTenant());
+        application.setEstate(estateRepository.findById(estateID)
+                .orElseThrow(() -> new RuntimeException("Estate not found")));
+
+
+        tenantService.submitViewingApplication(application);
+
+        model.addAttribute("successMessage", "Application submitted successfully!");
+
+        return "redirect:/";
+
+    }
+//------------------------------------------------------------------------
+
+
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/applications/register/{applicationId}/accept")
@@ -131,6 +195,7 @@ public class ApplicationController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/applications/register/{applicationId}/reject")
     public ResponseEntity<String> rejectRegistration(@PathVariable Integer applicationId) {
+
         ApplicationForRegistration application = adminService.rejectApplication(applicationId);
         return ResponseEntity.ok("Application with ID " + applicationId + " has been rejected.");
     }

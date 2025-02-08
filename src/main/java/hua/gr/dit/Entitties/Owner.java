@@ -40,12 +40,15 @@ public class Owner {
     public Owner() {
     }
 
-    public Owner(Integer id, String IBAN, Integer numberOfEstates, Integer availableEstates) {
-        this.id = id;
-
-        this.IBAN = IBAN;
-        this.numberOfEstates = numberOfEstates;
+    public Owner(Integer availableEstates, List<Estate> estates, String IBAN, Integer id, Integer numberOfEstates, List<ApplicationForRegistration> registrations, List<ApplicationOfRental> rentals, User user) {
         this.availableEstates = availableEstates;
+        this.estates = estates;
+        this.IBAN = IBAN;
+        this.id = id;
+        this.numberOfEstates = numberOfEstates;
+        this.registrations = registrations;
+        this.rentals = rentals;
+        this.user = user;
     }
 
     public Integer getId() {

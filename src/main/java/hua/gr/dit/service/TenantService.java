@@ -37,16 +37,20 @@ public class TenantService {
 
     @Transactional
     public ApplicationOfRental submitRentalApplication(ApplicationOfRental application) {
-        if (application.getTenant() == null) {
+        Tenant tenant = application.getTenant();
+        if (tenant == null) {
             throw new RuntimeException("Tenant must be associated with the application.");
         }
+        application.setTenant(tenant);
 
         ApplicationOfRental savedApplication = rentalRepository.save(application);
 
-        User tenantUser = application.getTenant().getUser();
-        String tenantEmail = tenantUser.getEmail();
-        String msg = "Your rental application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
-        notificationService.sendNotification(tenantEmail, msg);
+        application.setStatus("Pending");
+
+        String tenantEmail = tenant.getUser().getEmail();
+        String msg = "Your viewing application has been successfully submitted for estate #" +
+                savedApplication.getEstate().getId() + ". Our team will review it shortly.";
+        notificationService.sendNotification(tenantEmail, msg);;
 
 
         return savedApplication;
@@ -58,11 +62,28 @@ public class TenantService {
             throw new RuntimeException("Tenant must be associated with the application.");
         }
 
+        // Fetch tenant from the database to ensure it's managed by JPA
+        Tenant tenant = tenantRepository.findById(application.getTenant().getId())
+                .orElseThrow(() -> new RuntimeException("Tenant not found!"));
+
+        application.setTenant(tenant);
+
+        // Set additional fields if necessary
+        if (application.getEstate() != null) {
+            Estate estate = estateRepository.findById(application.getEstate().getId())
+                    .orElseThrow(() -> new RuntimeException("Estate not found!"));
+            application.setEstate(estate);
+        }
+
+        application.setStatus("Pending");
+
+
         ApplicationForView savedApplication = viewRepository.save(application);
 
-        User tenantUser = application.getTenant().getUser();
-        String tenantEmail = tenantUser.getEmail();
-        String msg = "Your viewing application for estate #" + savedApplication.getEstate() +  " has been successfully submitted. Our team will review it shortly.";
+        // Send notification
+        String tenantEmail = tenant.getUser().getEmail();
+        String msg = "Your viewing application has been successfully submitted for estate #" +
+                savedApplication.getEstate().getId() + ". Our team will review it shortly.";
         notificationService.sendNotification(tenantEmail, msg);
 
         return savedApplication;

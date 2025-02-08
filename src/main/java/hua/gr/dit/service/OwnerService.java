@@ -6,6 +6,7 @@ import hua.gr.dit.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -59,11 +60,10 @@ public class OwnerService {
 
 
     @Transactional
-    public ApplicationForRegistration submitApplicationForRegistration(Integer adminId, Integer ownerId){ // Estate estate
+    public ApplicationForRegistration submitApplicationForRegistration( ApplicationForRegistration application, @RequestParam("adminId") Integer adminId, @RequestParam("ownerId") Integer ownerId){ // Estate estate
         Owner owner = ownerRepository.findById(ownerId).orElseThrow( () -> new RuntimeException("Owner with the following ID not found:" + ownerId));
         Admin admin = adminRepository.findById(adminId).orElseThrow( () -> new RuntimeException("Admin with the following ID not found:" + adminId));
 
-        ApplicationForRegistration application = new ApplicationForRegistration();
 
         application.setOwner(owner);
 //        application.setEstate(estate);

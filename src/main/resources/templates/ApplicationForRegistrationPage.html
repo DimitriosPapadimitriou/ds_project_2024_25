@@ -28,7 +28,7 @@
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
   <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-c3ce"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="#" class="u-image u-logo u-image-1" data-image-width="133" data-image-height="135">
-          <img th:src="@{images/black-logo-8_150.png}" class="u-logo-image u-logo-image-1">
+          <img th:src="@{/images/black-logo-8_150.png}" class="u-logo-image u-logo-image-1">
         </a>
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1" data-responsive-from="MD" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-delay="0">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px; font-weight: 700; text-transform: uppercase;">
@@ -73,14 +73,14 @@
         <div class="u-align-center u-container-align-center u-container-style u-group u-radius-50 u-shape-round u-white u-group-1">
           <div class="u-container-layout u-container-layout-1">
             <span class="u-file-icon u-icon u-icon-circle u-palette-1-light-1 u-text-white u-icon-1">
-              <img th:src="@{images/149288-abbd049d.png}" alt="">
+              <img th:src="@{/images/149288-abbd049d.png}" alt="">
             </span>
             <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1">New Application</h3>
             <div class="u-form u-login-control u-radius u-white u-form-1">
               <form th:action="@{/applications/registration/new}" th:object="${application}" class="u-clearfix u-form-custom-backend u-form-spacing-15 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 36px;" method="post">
                 <div class="u-form-group u-form-partition-factor-2 u-form-group-1">
                   <label for="text-292f" class="u-label">Address *</label>
-                  <input type="text" th:field="*{address}" placeholder="Enter Your Address" id="text-292f" name="text-1" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1" required="required">
+                  <input type="text" th:field="*{address}" placeholder="Enter your address" id="text-292f" name="text-1" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1" required="required">
                 </div>
                   <div class="u-form-group u-form-name u-form-partition-factor-2">
                       <label for="username-a30d" class="u-label">Floor *</label>
@@ -88,18 +88,14 @@
                   </div>
                   <div class="u-form-group u-form-partition-factor-2 u-form-password">
                   <label for="password-a30d" class="u-label">Area *</label>
-                  <input type="text" th:field="*{area}" placeholder="Enter your Password" id="password-a30d" name="password" class="u-grey-5 u-input u-input-rectangle u-radius u-input-2" required="">
-                </div>
-                <div class="u-form-group u-form-partition-factor-2 u-form-group-3" data-dependency="[{&quot;action&quot;:&quot;show&quot;,&quot;field&quot;:&quot;username&quot;,&quot;condition&quot;:&quot;equal&quot;,&quot;value&quot;:&quot;&quot;}]">
-                  <label for="text-2086" class="u-label">Floor *</label>
-                  <input type="text"  th:field="*{floor}" id="text-2086" name="text" class="u-grey-5 u-input u-input-rectangle u-radius u-input-3" required="required" placeholder="Enter your Email">
+                  <input type="text" th:field="*{area}" placeholder="Enter the area" id="password-a30d" name="password" class="u-grey-5 u-input u-input-rectangle u-radius u-input-2" required="">
                 </div>
                 <div class="u-form-group u-form-name u-form-partition-factor-2">
                   <label for="username-a30d" class="u-label">Amount Of Rooms *</label>
                   <input type="number" th:field="*{amountOfRooms}" placeholder="Enter your Username" id="username-a30d" name="username" class="u-grey-5 u-input u-input-rectangle u-radius u-input-4" required="">
                 </div>
                 <div class="u-form-group u-form-group-5">
-                  <label for="text-c2ef" class="u-label">Duration *</label>
+                  <label for="text-c2ef" class="u-label">Duration * (In months)</label>
                   <input type="number" th:field="*{duration}" placeholder="Enter Your Rental Duration" id="text-c2ef" name="text-2" class="u-grey-5 u-input u-input-rectangle u-radius u-input-5" required="required">
                 </div>
                 <div class="u-form-group u-form-group-6">
@@ -108,33 +104,33 @@
                 </div>
                 <div class="u-form-group u-form-group-7">
                   <label for="text-f2df" class="u-label">Documents</label>
-                  <input type="text" placeholder="" th:field="*{documents}" id="text-f2df" name="text-3" class="u-grey-5 u-input u-input-rectangle u-radius u-input-7" >
+                  <input type="file" placeholder="Legal documents" th:field="*{documents}" id="text-f2df" name="text-3" class="u-grey-5 u-input u-input-rectangle u-radius u-input-7" >
                 </div>
                 <div class="u-form-group u-form-number u-form-number-layout-range-number u-form-group-8">
-                  <label for="range-4930" class="u-label">Price Per Month</label>
+                  <label for="range-4930" class="u-label">Price Per Month *</label>
                   <div class="u-input-row" data-value="100">
                     <input value="100" th:field="*{price}" min="100" max="10000" step="1" type="range" placeholder="" id="range-4930" name="range" class="u-input u-range">
-                    <input type="number" th:field="*{price}" placeholder="" id="number-range-4930" class="u-grey-5 u-input u-input-rectangle u-radius u-text-black u-input-9" min="100" max="10000" step="1" value="100">
+                    <input type="number" th:field="*{price}" placeholder="" id="number-range-4930" class="u-grey-5 u-input u-input-rectangle u-radius u-text-black u-input-9" min="100" max="10000" step="1" value="100" required="required">
                   </div>
                 </div>
                 <div class="u-form-group u-form-number u-form-number-layout-range-number u-form-group-9">
-                  <label for="range-476d" class="u-label">Age Of Construction</label>
+                  <label for="range-476d" class="u-label">Age Of Construction *</label>
                   <div class="u-input-row" data-value="2000">
                     <input value="2000" th:field="*{ageOfConstruction}" min="1890" max="2025" step="1" type="range" placeholder="" id="range-476d" name="range-1" class="u-input u-range">
-                    <input type="number" th:field="*{ageOfConstruction}" placeholder="" id="number-range-476d" class="u-grey-5 u-input u-input-rectangle u-radius u-text-black u-input-11" min="1890" max="2025" step="1" value="2000">
+                    <input type="number" th:field="*{ageOfConstruction}" placeholder="" id="number-range-476d" class="u-grey-5 u-input u-input-rectangle u-radius u-text-black u-input-11" min="1890" max="2025" step="1" value="2000" required="required">
                   </div>
                 </div>
                 <div class="u-form-group u-form-number u-form-number-layout-range-number u-form-group-10">
-                  <label for="range-9d19" class="u-label">Square Meters</label>
+                  <label for="range-9d19" class="u-label">Square Meters *</label>
                   <div class="u-input-row" data-value="10">
                     <input value="10" th:field="*{squareMeters}" min="10" max="1000" step="10" type="range" placeholder="" id="range-9d19" name="range-2" class="u-input u-range">
-                    <input type="number" placeholder="" th:field="*{squareMeters}" id="number-range-9d19" class="u-grey-5 u-input u-input-rectangle u-radius u-text-black u-input-13" min="10" max="1000" step="10" value="10">
+                    <input type="number" placeholder="" th:field="*{squareMeters}" id="number-range-9d19" class="u-grey-5 u-input u-input-rectangle u-radius u-text-black u-input-13" min="10" max="1000" step="10" value="10" required="required">
                   </div>
                 </div>
                 <div class="u-form-group u-form-select u-form-group-11">
-                  <label for="select-32c6" class="u-label">Type of estate</label>
+                  <label for="select-32c6" class="u-label">Type of estate *</label>
                   <div class="u-form-select-wrapper">
-                    <select id="select-32c6" th:field="*{typeOfEstate}" name="select" class="u-grey-5 u-input u-input-rectangle u-radius u-input-14">
+                    <select id="select-32c6" th:field="*{typeOfEstate}" name="select" class="u-grey-5 u-input u-input-rectangle u-radius u-input-14" required="required">
                       <option value="Apartment" data-calc="Apartment">Apartment</option>
                       <option value="Detached House" data-calc="Detached House">Detached House</option>
                       <option value="Townhouse Estate" data-calc="Townhouse Estate">Townhouse Estate</option>
@@ -144,9 +140,9 @@
                   </div>
                 </div>
                 <div class="u-form-group u-form-select u-form-group-12">
-                  <label for="select-7b09" class="u-label">Type Of Heating</label>
+                  <label for="select-7b09" class="u-label">Type Of Heating *</label>
                   <div class="u-form-select-wrapper">
-                      <select th:field="*{typeOfHeating}" id="typeOfHeating" class="u-grey-5 u-input u-input-rectangle u-radius u-input-15">
+                      <select th:field="*{typeOfHeating}" id="typeOfHeating" class="u-grey-5 u-input u-input-rectangle u-radius u-input-15" required="required">
                           <option value="Central Heating">Central Heating</option>
                           <option value="District Heating">District Heating</option>
                           <option value="Electric Heating">Electric Heating</option>
@@ -161,7 +157,7 @@
                 </div>
                 <div class="u-form-group u-form-textarea u-form-group-15">
                   <label for="textarea-538c" class="u-label">Description</label>
-                  <textarea rows="4" th:field="*{description}" cols="50" id="textarea-538c" name="textarea" class="u-grey-5 u-input u-input-rectangle u-radius u-input-16" required=""></textarea>
+                  <textarea rows="4" th:field="*{description}" cols="50" id="textarea-538c" name="textarea" class="u-grey-5 u-input u-input-rectangle u-radius u-input-16"></textarea>
                 </div>
                 <div class="u-align-right u-form-group u-form-submit">
                   <a href="#" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-1-light-1 u-radius u-btn-1">Submit</a>
@@ -179,7 +175,7 @@
     
     <footer class="u-align-center-md u-align-center-sm u-align-center-xs u-clearfix u-footer u-grey-80" id="sec-b81f"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="#" class="u-image u-logo u-image-1" data-image-width="133" data-image-height="135">
-          <img th:src="@{images/black-logo-8_150.png}" class="u-logo-image u-logo-image-1">
+            <img th:src="@{/images/black-logo-8_150.png}" class="u-logo-image u-logo-image-1">
         </a>
         <p class="u-align-center-lg u-align-center-md u-align-center-xl u-text u-text-1"> © 2025 Company. All Rights Reserved.<br>Licensed Real Estate Broker
         </p>

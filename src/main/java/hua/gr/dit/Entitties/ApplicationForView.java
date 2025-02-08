@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-public class    ApplicationForView {
+public class ApplicationForView {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "estate_id")
@@ -30,49 +30,17 @@ public class    ApplicationForView {
     @Column
     private String dateOfVisit;
 
-    @Column
-    private Integer tenantID;
-
-    @Column
-    private Integer ownerID;
-
-    public ApplicationForView(Estate estate, Tenant tenant, Integer applicationID, String status, String date, String description, String dateOfVisit, Integer tenantID, Integer ownerID) {
-        this.estate = estate;
+    public ApplicationForView(Tenant tenant, String status, Estate estate, String description, String dateOfVisit, String date, Integer applicationID) {
         this.tenant = tenant;
-        this.applicationID = applicationID;
         this.status = status;
-        this.date = date;
+        this.estate = estate;
         this.description = description;
         this.dateOfVisit = dateOfVisit;
-        this.tenantID = tenantID;
-        this.ownerID = ownerID;
+        this.date = date;
+        this.applicationID = applicationID;
     }
 
     public ApplicationForView() {
-    }
-
-    public Estate getEstate() {
-        return estate;
-    }
-
-    public void setEstate(Estate estate) {
-        this.estate = estate;
-    }
-
-    public Tenant getTenant() {
-        return tenant;
-    }
-
-    public void setTenant(Tenant tenant) {
-        this.tenant = tenant;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Integer getApplicationID() {
@@ -91,14 +59,6 @@ public class    ApplicationForView {
         this.date = date;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getDateOfVisit() {
         return dateOfVisit;
     }
@@ -107,31 +67,35 @@ public class    ApplicationForView {
         this.dateOfVisit = dateOfVisit;
     }
 
-    public Integer getTenantID() {
-        return tenantID;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTenantID(Integer tenantID) {
-        this.tenantID = tenantID;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Integer getOwnerID() {
-        return ownerID;
+    public Estate getEstate() {
+        return estate;
     }
 
-    public void setOwnerID(Integer ownerID) {
-        this.ownerID = ownerID;
+    public void setEstate(Estate estate) {
+        this.estate = estate;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicationForView{" +
-                "applicationID=" + applicationID +
-                ", date='" + date + '\'' +
-                ", description='" + description + '\'' +
-                ", dateOfVisit='" + dateOfVisit + '\'' +
-                ", tenantID=" + tenantID +
-                ", ownerID=" + ownerID +
-                '}';
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 }
