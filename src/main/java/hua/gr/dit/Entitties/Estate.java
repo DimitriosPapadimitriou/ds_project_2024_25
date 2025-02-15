@@ -76,6 +76,8 @@ public class Estate {
 
     }
 
+
+
     public Integer getId() {
         return id;
     }
@@ -194,6 +196,14 @@ public class Estate {
 
     public void setLastUpdated(String lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     @Override

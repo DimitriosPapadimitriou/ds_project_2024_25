@@ -47,7 +47,7 @@ public class ApplicationForRegistration {
     private Integer duration;
 
     @Column
-    private Integer price;
+    private Float price;
 
     @Column
     private String floor;
@@ -68,7 +68,7 @@ public class ApplicationForRegistration {
     private String status;
 
 
-    public ApplicationForRegistration(String address, Admin admin, Integer ageOfConstruction, Integer amountOfRooms, Integer applicationID, String area, String description, String documents, Integer duration, String floor, Owner owner, Boolean parking, Integer price, String properties, Integer squareMeters, String status, String typeOfEstate, String typeOfHeating) {
+    public ApplicationForRegistration(String address, Admin admin, Integer ageOfConstruction, Integer amountOfRooms, Integer applicationID, String area, String description, String documents, Integer duration, String floor, Owner owner, Boolean parking, Float price, String properties, Integer squareMeters, String status, String typeOfEstate, String typeOfHeating) {
         this.address = address;
         this.admin = admin;
         this.ageOfConstruction = ageOfConstruction;
@@ -189,11 +189,11 @@ public class ApplicationForRegistration {
         this.duration = duration;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

@@ -1,42 +1,53 @@
 package hua.gr.dit.service;
 
 import hua.gr.dit.Entitties.ApplicationForRegistration;
+import hua.gr.dit.Entitties.Estate;
 import hua.gr.dit.Entitties.User;
 import hua.gr.dit.repositories.ApplicationForRegistrationRepository;
+import hua.gr.dit.repositories.EstateRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
 public class AdminService {
 
+    private final EstateRepository estateRepository;
     private ApplicationForRegistrationRepository registrationRepository;
-    private NotificationService notificationService;
 
-    public AdminService(ApplicationForRegistrationRepository registrationRepository, NotificationService notificationService) {
+    public AdminService(ApplicationForRegistrationRepository registrationRepository, EstateRepository estateRepository) {
         this.registrationRepository = registrationRepository;
-        this.notificationService = notificationService;
+        this.estateRepository = estateRepository;
     }
 
     public ApplicationForRegistration acceptApplication(Integer applicationId) {
         ApplicationForRegistration application = registrationRepository.findById(applicationId)
                 .orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
 
-//        application.setStatus("Accepted");
+        application.setStatus("Accepted");
+        Estate estate = new Estate();
+        estate.setOwner(application.getOwner());
+        estate.setSquareMeters(application.getSquareMeters());
+        estate.setTypeOfEstate(application.getTypeOfEstate());
+        estate.setAddress(application.getAddress());
+        estate.setArea(application.getArea());
+        estate.setAgeOfConstruction(application.getAgeOfConstruction());
+        estate.setDuration(application.getDuration());
+        estate.setPrice(application.getPrice());
+        estate.setFloor(application.getFloor());
+        estate.setAmountOfRooms(application.getAmountOfRooms());
+        estate.setTypeOfHeating(application.getTypeOfHeating());
+        estate.setParking(application.getParking());
+        estate.setAvailability(Boolean.TRUE);
+        estate.setDescription(application.getDescription());
+        estate.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        estateRepository.save(estate);
 
-        registrationRepository.save(application);
-
-        User ownerUser = application.getOwner().getUser();
-        if(ownerUser != null) {
-            String ownerEmail = ownerUser.getEmail();
-            String message = "Your application for property registration has been accepted.";
-            notificationService.sendNotification(ownerEmail, message);
-        } else {
-            throw new RuntimeException("Associated User for Owner not found. Unable to send notification.");
-        }
 
 
-        return application;
+        return registrationRepository.save(application);
     }
 
     public ApplicationForRegistration rejectApplication(Integer applicationId) {
@@ -45,18 +56,8 @@ public class AdminService {
 
 //        application.setStatus("Rejected");
 
-        registrationRepository.save(application);
 
-        User ownerUser = application.getOwner().getUser();
-        if(ownerUser != null) {
-            String ownerEmail = ownerUser.getEmail();
-            String message = "Your application for property registration has been rejected.";
-            notificationService.sendNotification(ownerEmail, message);
-        } else {
-            throw new RuntimeException("Associated User for Owner not found. Unable to send notification.");
-        }
-
-        return application;
+        return registrationRepository.save(application);
     }
 
     public List<ApplicationForRegistration> getPendingApplications() {

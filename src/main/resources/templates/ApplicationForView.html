@@ -78,10 +78,6 @@
             <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1"> New Application</h3>
             <div class="u-form u-login-control u-white u-form-1">
               <form th:action="@{/applications/view/new/{estateID}(estateID=${estate.id})}" th:object="${application}" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;" method="post">
-                  <!-- @{/view/new/{estateID}(estateID=${estateId})}   @{/applications/view/new/{estateID}(estateID=${estate.id})}
-<input type="hidden" th:field="*{tenant.id}" value="${loggedInTenantId}"/>-->
-                  <span th:text="${estate.id}"></span>
-<!--                  <input type="hidden" th:field="*{estate.id}" value="1"/>-->
                 <div class="u-form-date u-form-group u-form-group-3">
                   <label for="date-ed38" class="u-label">Date Of Visit</label>
                   <input type="text" th:field="*{dateOfVisit}" placeholder="MM/DD/YYYY" id="date-ed38" name="date" class="u-grey-5 u-input u-input-rectangle u-radius u-input-3" required="" data-date-format="mm/dd/yyyy">

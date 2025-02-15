@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;" lang="en"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"><head>
+<html style="font-size: 16px;" lang="en"><head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>Register</title>
+    <title>Application</title>
     <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
-    <link rel="stylesheet" th:href="@{/css/Register.css}" media="screen">
+    <link rel="stylesheet" th:href="@{/css/Estates.css}" media="screen">
     <script class="u-script" type="text/javascript" th:src="@{/js/jquery.js}" defer=""></script>
     <script class="u-script" type="text/javascript" th:src="@{/js/nicepage.js}" defer=""></script>
     <meta name="generator" content="Nicepage 7.2.3, nicepage.com">
@@ -15,7 +14,6 @@
 
 
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
     <script type="application/ld+json">{
         "@context": "http://schema.org",
         "@type": "Organization",
@@ -24,7 +22,7 @@
         "sameAs": []
     }</script>
     <meta name="theme-color" content="#478ac9">
-    <meta property="og:title" content="Register">
+    <meta property="og:title" content="Estates">
     <meta property="og:type" content="website">
     <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
 <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-c3ce"><div class="u-clearfix u-sheet u-sheet-1">
@@ -40,31 +38,11 @@
             </a>
         </div>
         <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-spacing-30 u-unstyled u-nav-1" data-animation-name="customAnimationIn" data-animation-duration="1000">
-                <li sec:authorize="hasRole('ROLE_OWNER')" class="u-nav-item">
-                    <a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="/applications/registration/new" style="padding: 10px 0px;">
-                        New Registration
-                    </a>
-                </li>
-
-                <li class="u-nav-item">
-                    <a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="/" style="padding: 10px 0px;">
-                        Home
-                    </a>
-                </li>
-
-
-                <li class="u-nav-item">
-                    <a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" style="padding: 10px 0px;" href="/login">
-                        Login
-                    </a>
-                </li>
-                <li class="u-nav-item">
-                    <a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" style="padding: 10px 0px;" href="/register">
-                        Register
-                    </a>
-                </li>
-            </ul>
+            <ul class="u-nav u-spacing-30 u-unstyled u-nav-1" data-animation-name="customAnimationIn" data-animation-duration="1000"><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="./" style="padding: 10px 0px;">Home</a>
+            </li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="Estates.html" style="padding: 10px 0px;">Estates</a>
+            </li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="Contact.html" style="padding: 10px 0px;">Contact</a>
+            </li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" style="padding: 10px 0px;">Login</a>
+            </li></ul>
         </div>
         <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
@@ -89,45 +67,90 @@
         }</style>
     </nav>
 </div></header>
-<section class="u-clearfix u-image u-section-1" id="sec-3692">
-    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <div class="u-align-center u-container-align-center u-container-style u-group u-radius-50 u-shape-round u-white u-group-1">
-            <div class="u-container-layout u-container-layout-1">
-            <span class="u-file-icon u-icon u-icon-circle u-palette-1-light-1 u-text-white u-icon-1">
-              <img th:src="@{/images/149307-c98f5202.png}" alt="">
-            </span>
-                <h3 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1">Join Us</h3>
-                <div class="u-form u-login-control u-radius u-white u-form-1">
-                    <form action="#" th:action="@{/register}" th:object="${user}" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;" method="post">
-                        <div class="u-form-group u-form-name">
-                            <label for="username-a30d" class="u-label">Username *</label>
-                            <input type="text" th:field="*{username}" placeholder="Enter your Username" id="username-a30d" name="username" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1" required="">
+<section class="u-align-center u-clearfix u-container-align-center u-grey-15 u-section-1" id="sec-a4aa">
+    <div class="u-clearfix u-sheet u-valign-top u-sheet-1">
+        <div class="u-expanded-width u-tabs u-tabs-1">
+            <ul class="u-tab-list u-unstyled" role="tablist"><li class="u-tab-item" role="presentation"><a class="active u-active-white u-button-style u-tab-link u-tab-link-1" id="link-tab-0da5" href="#tab-0da5" role="tab" aria-controls="tab-0da5" aria-selected="true">View Applications</a>
+            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-2" id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7" aria-selected="false">Rental Applications</a>
+            </li></ul>
+
+
+
+            <div class="u-tab-content">
+                <div class="u-container-style u-tab-active u-tab-pane u-white u-tab-pane-1" id="tab-0da5" role="tabpanel" aria-labelledby="link-tab-0da5">
+                    <div class="u-container-layout  u-container-layout-1">
+                        <h3 class="u-text u-text-default u-text-1" style="margin-top: 15px; margin-left: 10px; margin-bottom: 15px">Registrations</h3>
+                        <div class="u-table u-table-responsive u-table-1">
+                            <table class="u-table-entity">
+                                <colgroup>
+                                    <col width="20%">
+                                    <col width="60%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                </colgroup>
+                                <tbody class="u-table-body">
+                                <tr style="height: 55px;">
+                                    <td class="u-first-column u-table-cell">Properties</td>
+                                    <td class="u-table-cell">Documents</td>
+                                    <td class="u-table-cell">Square meters</td>
+                                    <td class="u-table-cell">Type of estate</td>
+                                    <td class="u-table-cell">Address</td>
+                                    <td class="u-table-cell">Area</td>
+                                    <td class="u-table-cell">Age of construction</td>
+                                    <td class="u-table-cell">Duration</td>
+                                    <td class="u-table-cell">Price</td>
+                                    <td class="u-table-cell">Floor</td>
+                                    <td class="u-table-cell">Rooms</td>
+                                    <td class="u-table-cell">Heating</td>
+                                    <td class="u-table-cell">Parking</td>
+                                    <td class="u-table-cell">Description</td>
+
+
+
+                                    <td class="u-table-cell">Accept</td>
+                                    <td class="u-table-cell">Reject</td>
+
+                                <tr style="height: 56px;" th:each="registration : ${registrations}">
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.properties}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.documents}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.squareMeters}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.typeOfEstate}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.address}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.area}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.ageOfConstruction}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.duration}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.price}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.floor}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.amountOfRooms}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.typeOfHeating}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.parking != null ? (registration.parking ? 'Yes' : 'No') : 'N/A'}"></td>
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.description}"></td>
+
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
+                                        <form th:action="@{'/applications/registrations/accept/' + ${registration.applicationID}}" method="post">
+                                            <button type="submit">Accept</button>
+                                        </form>
+                                    </td>
+
+                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
+                                        <form th:action="@{'/applications/registrations/reject/' + ${registration.applicationID}}" method="post">
+                                            <button type="submit">Reject</button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="u-form-group u-form-group-2">
-                            <label for="text-2086" class="u-label">Email *</label>
-                            <input type="text" th:field="*{email}" id="text-2086" name="text" class="u-grey-5 u-input u-input-rectangle u-radius u-input-2" required="required" placeholder="Enter your Email">
-                        </div>
-                        <div class="u-form-group u-form-password">
-                            <label for="password-a30d" class="u-label">Password *</label>
-                            <input type="password" th:field="*{password}" placeholder="Enter your Password" id="password-a30d" name="password" class="u-grey-5 u-input u-input-rectangle u-radius u-input-3" required="">
-                        </div>
-                        <div class="u-form-checkbox u-form-group">
-                            <input type="checkbox" id="checkbox-a30d" name="roleName" class="u-field-input" value="ROLE_TENANT">
-                            <label for="checkbox-a30d" class="u-field-label" style="">Do you want a tenant Role?</label>
-                        </div>
-                        <div class="u-form-checkbox u-form-group u-form-group-5">
-                            <input type="checkbox" id="checkbox-dabc" name="roleName" class="u-field-input" value="ROLE_OWNER">
-                            <label for="checkbox-dabc" class="u-field-label">Do you want a owner Role?</label>
-                        </div>
-                        <div class="u-align-right u-form-group u-form-submit">
-                            <button type="submit"  class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-1-light-1 u-radius u-btn-1">Register</button>
-                            <input type="submit" value="submit" class="u-form-control-hidden">
-                        </div>
-                        <input type="hidden" value="" name="recaptchaResponse">
-                    </form>
+                    </div>
                 </div>
+                
+            </div>
+            <div class="u-container-style u-tab-pane u-white u-tab-pane-3" id="tab-2917" role="tabpanel" aria-labelledby="link-tab-2917">
+
             </div>
         </div>
+    </div>
     </div>
 </section>
 
@@ -177,7 +200,12 @@
     </div>
 </div></footer>
 <section class="u-backlink u-clearfix u-grey-80">
-
+    <p class="u-text">
+        <span>This site was created with the </span>
+        <a class="u-link" href="https://nicepage.com/" target="_blank" rel="nofollow">
+            <span>Nicepage</span>
+        </a>
+    </p>
 </section>
 
 </body></html>

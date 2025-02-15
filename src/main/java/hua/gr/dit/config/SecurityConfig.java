@@ -60,42 +60,15 @@ public class SecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true) // pou 8a me kanei redirect meta to login
+                        .defaultSuccessUrl("/", true)
                         .permitAll())
                 .logout((logout) -> logout.permitAll());
         return http.build();
     }
 
-    @PostConstruct
-    @Transactional
-    public void initializeAdmins() {
 
 
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN")
-                .orElseThrow(() -> new IllegalStateException("ROLE_ADMIN is not initialized in the database!"));
 
-
-        User admin1 = new User();
-        admin1.setEmail("admin1@example.com");
-        admin1.setUsername("admin1");
-        admin1.setPassword(passwordEncoder.encode("admin1"));
-        admin1.setRoles(Set.of(adminRole));
-        userRepository.save(admin1);
-
-        User admin2 = new User();
-        admin2.setEmail("admin2@example.com");
-        admin2.setUsername("admin2");
-        admin2.setPassword(passwordEncoder.encode("admin2"));
-        admin2.setRoles(Set.of(adminRole));
-        userRepository.save(admin2);
-
-        User admin3 = new User();
-        admin3.setEmail("admin3@example.com");
-        admin3.setUsername("admin3");
-        admin3.setPassword(passwordEncoder.encode("admin3"));
-        admin3.setRoles(Set.of(adminRole));
-        userRepository.save(admin3);
-    }
 
 
 }

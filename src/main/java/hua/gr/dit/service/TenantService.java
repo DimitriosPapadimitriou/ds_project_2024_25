@@ -17,12 +17,10 @@ public class TenantService {
     private ApplicationForViewRepository viewRepository;
     private ApplicationOfRentalRepository rentalRepository;
     private EstateRepository estateRepository;
-    private NotificationService notificationService;
     private UserService userService;
 
-    public TenantService(EstateRepository estateRepository, NotificationService notificationService, ApplicationOfRentalRepository rentalRepository, TenantRepository tenantRepository, UserService userService, ApplicationForViewRepository viewRepository) {
+    public TenantService(EstateRepository estateRepository, ApplicationOfRentalRepository rentalRepository, TenantRepository tenantRepository, UserService userService, ApplicationForViewRepository viewRepository) {
         this.estateRepository = estateRepository;
-        this.notificationService = notificationService;
         this.rentalRepository = rentalRepository;
         this.tenantRepository = tenantRepository;
         this.userService = userService;
@@ -46,11 +44,6 @@ public class TenantService {
         ApplicationOfRental savedApplication = rentalRepository.save(application);
 
         application.setStatus("Pending");
-
-        String tenantEmail = tenant.getUser().getEmail();
-        String msg = "Your viewing application has been successfully submitted for estate #" +
-                savedApplication.getEstate().getId() + ". Our team will review it shortly.";
-        notificationService.sendNotification(tenantEmail, msg);;
 
 
         return savedApplication;
@@ -80,11 +73,6 @@ public class TenantService {
 
         ApplicationForView savedApplication = viewRepository.save(application);
 
-        // Send notification
-        String tenantEmail = tenant.getUser().getEmail();
-        String msg = "Your viewing application has been successfully submitted for estate #" +
-                savedApplication.getEstate().getId() + ". Our team will review it shortly.";
-        notificationService.sendNotification(tenantEmail, msg);
 
         return savedApplication;
     }

@@ -18,14 +18,13 @@ public class OwnerService {
     private ApplicationForViewRepository viewRepository;
     private ApplicationOfRentalRepository rentalRepository;
     private ApplicationForRegistrationRepository registrationRepository;
-    private NotificationService notificationService;
     private AdminRepository adminRepository;
 
     @Autowired
-    public OwnerService(AdminRepository adminRepository, EstateRepository estateRepository, NotificationService notificationService, OwnerRepository ownerRepository, ApplicationForRegistrationRepository registrationRepository, ApplicationOfRentalRepository rentalRepository, ApplicationForViewRepository viewRepository) {
+    public OwnerService(AdminRepository adminRepository, EstateRepository estateRepository, OwnerRepository ownerRepository, ApplicationForRegistrationRepository registrationRepository, ApplicationOfRentalRepository rentalRepository, ApplicationForViewRepository viewRepository) {
         this.adminRepository = adminRepository;
         this.estateRepository = estateRepository;
-        this.notificationService = notificationService;
+
         this.ownerRepository = ownerRepository;
         this.registrationRepository = registrationRepository;
         this.rentalRepository = rentalRepository;
@@ -66,41 +65,35 @@ public class OwnerService {
 
 
         application.setOwner(owner);
-//        application.setEstate(estate);
         application.setStatus("Pending");
 
         System.out.println("DEBUG: Saving application to database...");
         ApplicationForRegistration savedApplication = registrationRepository.save(application);
         System.out.println("DEBUG: Application saved with ID: " + savedApplication.getApplicationID());
 
-
-        User ownerUser = application.getOwner().getUser();
-        if(ownerUser != null) {
-            String ownerEmail = ownerUser.getEmail();
-            String ownerMessage = "Your application for property registration has been submitted.";
-            notificationService.sendNotification(ownerEmail, ownerMessage);
-        } else {
-            throw new RuntimeException("Associated User for Owner not found. Unable to send notification.");
-        }
-
-        User adminUser = application.getOwner().getUser();
-        if(adminUser != null) {
-            String adminEmail = adminUser.getEmail();
-            String adminMessage = "A new estate registration request has been received";
-            notificationService.sendNotification(adminEmail, adminMessage);
-        }else {
-            throw new RuntimeException("Associated User for Admin not found. Unable to send notification.");
-        }
-
         return  application;
     }
 
     @Transactional
     public ApplicationOfRental acceptApplicationOfRental(Integer applicationId){
-        ApplicationOfRental application = rentalRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
-        application.setStatus("Accepted");
+        ApplicationOfRental acceptedApplication = rentalRepository.findById(applicationId).orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
+        acceptedApplication.setStatus("Accepted");
+        Estate estate = acceptedApplication.getEstate();
+        estate.setAvailability(Boolean.FALSE);
 
-        return rentalRepository.save(application);
+        List<ApplicationOfRental> otherApplicationsRental = rentalRepository.findByEstateAndStatus(estate, "Pending");
+        for (ApplicationOfRental application : otherApplicationsRental) {
+            application.setStatus("Rejected");
+            rentalRepository.save(application);
+        }
+
+        List<ApplicationForView> otherApplicationsView = viewRepository.findByEstateAndStatus(estate, "Pending");
+        for (ApplicationForView application : otherApplicationsView) {
+            application.setStatus("Rejected");
+            viewRepository.save(application);
+        }
+
+        return rentalRepository.save(acceptedApplication);
     }
 
     @Transactional

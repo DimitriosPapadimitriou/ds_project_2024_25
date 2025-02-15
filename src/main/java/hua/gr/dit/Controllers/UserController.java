@@ -55,7 +55,7 @@ public class UserController {
         }
         String message = "User '"+id+"' saved successfully !";
         model.addAttribute("msg", message);
-        return "index";
+        return "Thank-you-page";
     }
 
     @GetMapping("/users")

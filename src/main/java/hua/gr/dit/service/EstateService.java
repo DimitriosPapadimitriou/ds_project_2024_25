@@ -38,22 +38,28 @@ public class EstateService {
 
     @Transactional
     public List<Estate> getEstateByAddress(String address){
-        return estateRepository.findByAddress(address);
+        return estateRepository.searchByAddress(address);
     }
 
     @Transactional
-    public List<Estate> getEstateByArea(String area){
-        return estateRepository.findByArea(area);
+    public List<Estate> getEstateBySquareMeters(Integer minValue, Integer maxValue){
+        return estateRepository.findBySquareMetersRange(minValue,maxValue);
+    }
+
+
+    @Transactional
+    public List<Estate> getEstatesByArea(String area) {
+        return estateRepository.searchByArea(area); // Use case-insensitive search
     }
 
     @Transactional
-    public List<Estate> getEstateByAge(Integer age){
-        return estateRepository.findByAgeOfConstruction(age);
+    public List<Estate> getEstateByAge(Integer minValue, Integer maxValue){
+        return estateRepository.findByAgeOfConstruction(minValue,maxValue);
     }
 
     @Transactional
-    public List<Estate> getEstateByPrice(Float price){
-        return estateRepository.findByPrice(price);
+    public List<Estate> getEstateByPrice(Integer minValue, Integer maxValue){
+        return estateRepository.findByPriceRange(minValue,maxValue);
     }
 
     @Transactional
@@ -81,5 +87,9 @@ public class EstateService {
         return estateRepository.findByAvailability(availability);
     }
 
+    @Transactional
+    public List<Estate> getEstateByOwnerId(Integer OwnerId){
+        return estateRepository.findByOwnerId(OwnerId); // find by onwer Id
+    }
 
 }

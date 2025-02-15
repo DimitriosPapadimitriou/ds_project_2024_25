@@ -1,6 +1,8 @@
 package hua.gr.dit.Entitties;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table
 public class ApplicationForView {
@@ -21,8 +23,8 @@ public class ApplicationForView {
     @Column
     private String status;
 
-    @Column
-    private String date;
+    @Column(updatable = false) // Prevents updates after creation
+    private LocalDate date;  // Change to LocalDate
 
     @Column
     private String description;
@@ -36,7 +38,7 @@ public class ApplicationForView {
         this.estate = estate;
         this.description = description;
         this.dateOfVisit = dateOfVisit;
-        this.date = date;
+        this.date = LocalDate.now();
         this.applicationID = applicationID;
     }
 
@@ -51,11 +53,11 @@ public class ApplicationForView {
         this.applicationID = applicationID;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

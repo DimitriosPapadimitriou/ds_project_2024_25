@@ -2,13 +2,9 @@ package hua.gr.dit.Controllers;
 
 import hua.gr.dit.Entitties.*;
 import hua.gr.dit.Entitties.User;
-import hua.gr.dit.repositories.AdminRepository;
-import hua.gr.dit.repositories.EstateRepository;
-import hua.gr.dit.repositories.UserRepository;
-import hua.gr.dit.service.AdminService;
-import hua.gr.dit.service.OwnerService;
-import hua.gr.dit.service.TenantService;
-import hua.gr.dit.service.UserService;
+import hua.gr.dit.repositories.*;
+import hua.gr.dit.service.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -16,6 +12,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.Random;
 
@@ -26,24 +25,33 @@ public class ApplicationController {
     private OwnerService ownerService;
     private TenantService tenantService;
     private AdminService adminService;
+    private ApplicationOfRentalRepository applicationOfRentalRepository;
+    private ApplicationOfRentalService applicationOfRentalService;
+    private ApplicationForViewRepository applicationOfViewRepository;
+    private ApplicationForViewService applicationForViewService;
     private AdminRepository adminRepository;
     private UserRepository userRepository;
     private EstateRepository estateRepository;
+    private ApplicationForRegistrationRepository registrationRepository;
 
-    public ApplicationController(UserRepository userRepository, TenantService tenantService, OwnerService ownerService, EstateRepository estateRepository, AdminService adminService, AdminRepository adminRepository) {
-        this.userRepository = userRepository;
-        this.tenantService = tenantService;
-        this.ownerService = ownerService;
-        this.estateRepository = estateRepository;
-        this.adminService = adminService;
+    public ApplicationController(AdminRepository adminRepository, AdminService adminService, ApplicationForViewService applicationForViewService, ApplicationOfRentalRepository applicationOfRentalRepository, ApplicationOfRentalService applicationOfRentalService, ApplicationForViewRepository applicationOfViewRepository, EstateRepository estateRepository, OwnerService ownerService, ApplicationForRegistrationRepository registrationRepository, TenantService tenantService, UserRepository userRepository) {
         this.adminRepository = adminRepository;
+        this.adminService = adminService;
+        this.applicationForViewService = applicationForViewService;
+        this.applicationOfRentalRepository = applicationOfRentalRepository;
+        this.applicationOfRentalService = applicationOfRentalService;
+        this.applicationOfViewRepository = applicationOfViewRepository;
+        this.estateRepository = estateRepository;
+        this.ownerService = ownerService;
+        this.registrationRepository = registrationRepository;
+        this.tenantService = tenantService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping()
     public String application(){
         return "ApplicationPage";
     }
-
 
     //--------------- Registration Form----------------------
     @Secured("ROLE_OWNER")
@@ -183,6 +191,17 @@ public class ApplicationController {
     }
 //------------------------------------------------------------------------
 
+    // My estates applications
+    @Secured("ROLE_OWNER")
+    @GetMapping("/myEstate/{estateID}")
+    public String myEstateApplications(@PathVariable("estateID") Integer estateID, Model model, Principal principal){
+
+        model.addAttribute("applicationForRental", applicationOfRentalService.showApplicationOfRentalWithoutStatusByEstateId(estateID));
+        model.addAttribute("applicationOfView", applicationForViewService.showApplicationForViewWithoutStatusByEstateId(estateID));
+        return "ApplicationPage";
+    }
+
+//-----------------------------------------------------------------------
 
 
     @Secured("ROLE_ADMIN")
@@ -201,28 +220,28 @@ public class ApplicationController {
     }
 
     @Secured("ROLE_OWNER")
-    @PostMapping("/applications/rental/{applicationId}/accept")
-    public ResponseEntity<String> acceptRental(@PathVariable Integer applicationId){
-        ApplicationOfRental application = ownerService.acceptApplicationOfRental(applicationId);
-        return ResponseEntity.ok("Rental application with ID " + applicationId + " has been accepted.");
-    }
-
-    @Secured("ROLE_OWNER")
-    @PostMapping("/applications/rental/{applicationId}/reject")
+    @PostMapping("/rental/reject/{applicationId}")
     public ResponseEntity<String> rejectRental(@PathVariable Integer applicationId){
         ApplicationOfRental application = ownerService.rejectApplicationOfRental(applicationId);
         return ResponseEntity.ok("Rental application with ID " + applicationId + " has been rejected.");
     }
 
     @Secured("ROLE_OWNER")
-    @PostMapping("/applications/view/{applicationId}/accept")
-    public ResponseEntity<String> acceptViewing(@PathVariable Integer applicationId){
+    @PostMapping("/rental/accept/{applicationId}")
+    public ResponseEntity<String> acceptRental(@PathVariable Integer applicationId){
+        ApplicationOfRental application = ownerService.acceptApplicationOfRental(applicationId);
+        return ResponseEntity.ok("Rental application with ID " + applicationId + " has been accepted.");
+    }
+
+    //    @Secured("ROLE_OWNER")
+    @PostMapping("/view/accept/{applicationId}")
+    public String acceptViewing(@PathVariable Integer applicationId){
         ApplicationForView application = ownerService.acceptApplicationForView(applicationId);
-        return ResponseEntity.ok("Viewing application with ID " + applicationId + " has been accepted.");
+        return "redirect:/";
     }
 
     @Secured("ROLE_OWNER")
-    @PostMapping("/applications/view/{applicationId}/reject")
+    @PostMapping("/view/reject/{applicationId}")
     public ResponseEntity<String> rejectViewing(@PathVariable Integer applicationId){
         ApplicationForView application = ownerService.rejectApplicationForView(applicationId);
         return ResponseEntity.ok("Viewing application with ID " + applicationId + " has been rejected.");
@@ -243,6 +262,30 @@ public class ApplicationController {
         model.addAttribute("rentals", rentals);
         return "ApplicationForViewPage";
     }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/registrations")
+    public String showRegistrations(Model model){
+        List<ApplicationForRegistration> registrations = registrationRepository.findAll();
+        System.out.println("test registrations value " +registrations);
+        model.addAttribute("registrations", registrations);
+        return "showRegistrations";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/registrations/accept/{applicationId}")
+    public String acceptApplication(@PathVariable Integer applicationId) {
+        adminService.acceptApplication(applicationId);
+        return "redirect:/applications";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/registrations/reject/{applicationId}")
+    public String rejectApplication(@PathVariable Integer applicationId) {
+        adminService.rejectApplication(applicationId);
+        return "redirect:/applications";
+    }
+
 
 }
 

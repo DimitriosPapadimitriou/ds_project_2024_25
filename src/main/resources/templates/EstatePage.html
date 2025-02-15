@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;" lang="en"><head>
+<html style="font-size: 16px;" lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"><head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="">
@@ -38,11 +39,20 @@
             </a>
         </div>
         <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-spacing-30 u-unstyled u-nav-1" data-animation-name="customAnimationIn" data-animation-duration="1000"><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="./" style="padding: 10px 0px;">Home</a>
-            </li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="Estates.html" style="padding: 10px 0px;">Estates</a>
-            </li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="Contact.html" style="padding: 10px 0px;">Contact</a>
-            </li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" style="padding: 10px 0px;">Login</a>
-            </li></ul>
+            <ul class="u-nav u-spacing-30 u-unstyled u-nav-1" data-animation-name="customAnimationIn" data-animation-duration="1000">
+                <li sec:authorize="hasRole('ROLE_OWNER')" class="u-nav-item">
+                    <a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="/applications/registration/new" style="padding: 10px 0px;">
+                        New Registration
+                    </a>
+                </li>
+
+                <li class="u-nav-item">
+                    <a class="u-border-2 u-border-active-palette-1-base u-border-grey-90 u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-1-base" href="/" style="padding: 10px 0px;">
+                        Home
+                    </a>
+                </li>
+
+            </ul>
         </div>
         <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
@@ -51,7 +61,15 @@
                     <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="./" style="padding-top: 38px; padding-bottom: 38px;">Home</a>
                     </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Estates.html" style="padding-top: 38px; padding-bottom: 38px;">Estates</a>
                     </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact.html" style="padding-top: 38px; padding-bottom: 38px;">Contact</a>
-                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" style="padding-top: 38px; padding-bottom: 38px;">Login</a>
+                    </li><li class="u-nav-item">
+                        <a sec:authorize="!isAuthenticated()" class="u-button-style u-nav-link" style="padding-top: 38px; padding-bottom: 38px;">
+                            Login
+                        </a>
+                        <a sec:authorize="isAuthenticated()" class="nu-button-style u-nav-link">
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-primary">Sign Out</button>
+                            </form>
+                        </a>
                     </li></ul>
                 </div>
             </div>
@@ -68,16 +86,178 @@
     </nav>
 </div></header>
 <section class="u-align-center u-clearfix u-container-align-center u-grey-15 u-section-1" id="sec-a4aa">
+
     <div class="u-clearfix u-sheet u-valign-top u-sheet-1">
         <div class="u-expanded-width u-tabs u-tabs-1">
-            <ul class="u-tab-list u-unstyled" role="tablist"><li class="u-tab-item" role="presentation"><a class="active u-active-white u-button-style u-tab-link u-tab-link-1" id="link-tab-0da5" href="#tab-0da5" role="tab" aria-controls="tab-0da5" aria-selected="true">Description</a>
-            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-2" id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7" aria-selected="false">Specifications</a>
-            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-3" id="link-tab-2917" href="#tab-2917" role="tab" aria-controls="tab-2917" aria-selected="false">Reviews</a>
+            <ul class="u-tab-list u-unstyled" role="tablist"><li class="u-tab-item" role="presentation"><a class="active u-active-white u-button-style u-tab-link u-tab-link-1" id="link-tab-0da5" href="#tab-0da5" role="tab" aria-controls="tab-0da5" aria-selected="true">Address</a>
+            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-2" id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7" aria-selected="false">Area</a>
+            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-3" id="link-tab-2917" href="#tab-2917" role="tab" aria-controls="tab-2917" aria-selected="false"> Square Meters</a>
+            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-4" id="link-tab-aeed" href="#tab-aeed" role="tab" aria-controls="tab-aeed" aria-selected="false">Age</a>
+            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-5" id="link-tab-1a2f" href="#tab-1a2f" role="tab" aria-controls="tab-1a2f" aria-selected="false">Price</a>
+            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-6" id="link-tab-3e42" href="#tab-3e42" role="tab" aria-controls="tab-3e42" aria-selected="false">Heating</a>
+            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-7" id="link-tab-0195" href="#tab-0195" role="tab" aria-controls="tab-0195" aria-selected="false">Parking</a>
+            </li></ul>
+            <div class="u-tab-content">
+                <div class="u-container-style u-tab-active u-tab-pane u-white u-tab-pane-1" id="tab-0da5" role="tabpanel" aria-labelledby="link-tab-0da5">
+                    <div class="u-container-layout u-container-layout-2">
+
+                        <form action="#" id="addressForm" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" style="padding: 30px;" method="get">
+                            <div class="u-form-group u-form-partition-factor-2 u-form-password">
+                                <label for="address" class="u-label">Address *</label>
+                                <input type="text" placeholder="Enter the Address" id="address" name="address" class="u-grey-5 u-input u-input-rectangle u-radius u-input-2" required>
+                            </div>
+                            <div class="u-align-right u-form-group u-form-submit">
+                                <button type="submit" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="u-container-style u-tab-pane u-white u-tab-pane-2" id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
+                    <div class="u-container-layout u-container-layout-2">
+                        <!-- Area -->
+                        <form action="#" id="areaForm" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" style="padding: 30px;" method="get">
+                            <div class="u-form-group u-form-partition-factor-2 u-form-password">
+                                <label for="area" class="u-label">Area *</label>
+                                <input type="text" placeholder="Enter the Area" id="area" name="area" class="u-grey-5 u-input u-input-rectangle u-radius u-input-2" required>
+                            </div>
+                            <div class="u-align-right u-form-group u-form-submit">
+                                <button type="submit" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Search</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="u-container-style u-tab-pane u-white u-tab-pane-3" id="tab-2917" role="tabpanel" aria-labelledby="link-tab-2917">
+                    <div class="u-container-layout u-container-layout-3">
+                        <!-- Square Meters -->
+                        <form action="#" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;" method="get">
+
+                            <div class="u-form-group u-form-password u-form-select u-form-group-1">
+                                <label for="select-5150" class="u-label">Type Of House Size</label>
+                                <div class="u-form-select-wrapper">
+                                    <select id="select-5150" name="size" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1">
+                                        <option value="Big">Big</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Small">Small</option>
+                                    </select>
+                                    <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
+                                </div>
+                            </div>
+                            <div class="u-align-right u-form-group u-form-submit">
+                                <button href="" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">search</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+                <div class="u-container-style u-tab-pane u-white u-tab-pane-4" id="tab-aeed" role="tabpanel" aria-labelledby="link-tab-aeed">
+                    <div class="u-container-layout u-container-layout-4">
+                        <!-- Age -->
+                        <form action="#" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;" method="get">
+                            <div class="u-form-group u-form-password u-form-select u-form-group-1">
+                                <label for="select-5150" class="u-label">Type Of House Age</label>
+                                <div class="u-form-select-wrapper">
+                                    <select id="select-5150" name="decade" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1">
+                                        <option value="20">20's Decade</option>
+                                        <option value="10">10's Decade</option>
+                                        <option value="00">00's Decade</option>
+                                        <option value="90">90's Decade</option>
+                                        <option value="80">80's Decade</option>
+                                        <option value="70">70's Decade</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="u-align-right u-form-group u-form-submit">
+                                <button href="" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="u-container-style u-tab-pane u-white u-tab-pane-5" id="tab-1a2f" role="tabpanel" aria-labelledby="link-tab-1a2f">
+                    <div class="u-container-layout u-container-layout-5">
+                        <!-- Price -->
+                        <form action="#" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;" method="get">
+
+                            <div class="u-form-group u-form-password u-form-select u-form-group-1">
+                                <label for="select-5150" class="u-label">Type Of House Price</label>
+                                <div class="u-form-select-wrapper">
+                                    <select id="select-5150" name="price" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1">
+                                        <option value="greater20000">Greater Than 20.000</option>
+                                        <option value="greater10000">Greater than 10.000</option>
+                                        <option value="greater5000">Greater than 5.000</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
+                                </div>
+                            </div>
+                            <div class="u-align-right u-form-group u-form-submit">
+                                <button href="" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="u-container-style u-tab-pane u-white u-tab-pane-6" id="tab-3e42" role="tabpanel" aria-labelledby="link-tab-3e42">
+                    <div class="u-container-layout u-container-layout-6">
+                        <!-- Heating -->
+                        <form action="#" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;" method="get">
+
+                            <div class="u-form-group u-form-password u-form-select u-form-group-1">
+                                <label for="select-5150" class="u-label">Type Of House Price</label>
+                                <div class="u-form-select-wrapper">
+                                    <select id="select-5150" name="heating" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1">
+                                        <option value="Central Heating">Central Heating</option>
+                                        <option value="District Heating">District Heating</option>
+                                        <option value="Electric Heating">Electric Heating</option>
+                                        <option value="Individual Room Heating">Individual Room Heating</option>
+                                    </select>
+                                    <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
+                                </div>
+                            </div>
+                            <div class="u-align-right u-form-group u-form-submit">
+                                <button href="" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="u-container-style u-tab-pane u-white u-tab-pane-7" id="tab-0195" role="tabpanel" aria-labelledby="link-tab-0195">
+                    <div class="u-container-layout u-container-layout-7">
+                        <!-- Parking -->
+                        <form action="#" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;" method="get">
+                            <div class="u-form-group u-form-password u-form-select u-form-group-1">
+                                <label for="select-5150" class="u-label">Parking</label>
+                                <div class="u-form-select-wrapper">
+                                    <select id="select-5150" name="parking" class="u-grey-5 u-input u-input-rectangle u-radius u-input-1">
+                                        <option value="true">With Parking</option>
+                                        <option value="false">Without Parking</option>
+                                    </select>
+                                    <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
+                                </div>
+                            </div>
+                            <div class="u-align-right u-form-group u-form-submit">
+                                <button href="" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">search</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="u-expanded-width u-tabs u-tabs-1">
+            <ul class="u-tab-list u-unstyled" role="tablist"><li class="u-tab-item" role="presentation"><a class="active u-active-white u-button-style u-tab-link u-tab-link-1" id="link-tab-0da5" href="#tab-0da5" role="tab" aria-controls="tab-0da5" aria-selected="true">All Estates</a>
+            </li><li class="u-tab-item" role="presentation"><a sec:authorize="hasRole('ROLE_OWNER')"  class="u-active-white u-button-style u-tab-link u-tab-link-2" id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7" aria-selected="false">My Estates</a>
             </li></ul>
             <div class="u-tab-content">
                 <div class="u-container-style u-tab-active u-tab-pane u-white u-tab-pane-1" id="tab-0da5" role="tabpanel" aria-labelledby="link-tab-0da5">
                     <div class="u-container-layout u-valign-bottom u-container-layout-1">
-                        <h3 class="u-text u-text-default u-text-1">Basic Settings</h3>
+                        <h3 class="u-text u-text-default u-text-1" style="margin-top: 15px; margin-left: 10px; margin-bottom: 15px">All Estates</h3>
                         <div class="u-table u-table-responsive u-table-1">
                             <table class="u-table-entity">
                                 <colgroup>
@@ -89,9 +269,8 @@
                                 </colgroup>
                                 <tbody class="u-table-body">
                                 <tr style="height: 55px;">
-                                    <td class="u-first-column u-table-cell">Id</td>
-                                    <td class="u-table-cell">Square Meters</td>
-                                    <td class="u-table-cell">Type</td>
+                                    <td class="u-first-column u-table-cell">Square Meters</td>
+                                    <!--                                    <td class="u-table-cell">Type</td>-->
                                     <td class="u-table-cell">Area</td>
                                     <td class="u-table-cell">Address</td>
 
@@ -103,17 +282,15 @@
 
                                     <td class="u-table-cell">Heating</td>
                                     <td class="u-table-cell">Parking</td>
-                                    <td class="u-table-cell">Availability</td>
-                                    <td class="u-table-cell">Description</td>
-                                    <td class="u-table-cell">Last Updated</td>
+                                    <td class="u-table-cell">Estates</td>
 
-                                    <td class="u-table-cell">Action</td>
+                                    <td sec:authorize="hasRole('ROLE_TENANT')" class="u-table-cell">Application For View</td>
+                                    <td sec:authorize="hasRole('ROLE_TENANT')" class="u-table-cell">Application For Rental</td>
 
                                 </tr>
                                 <tr style="height: 56px;" th:each="estate : ${estates}" >
-                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-first-column u-table-cell" th:text="${estate.id}" ></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.squareMeters}"></td>
-                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.typeOfEstate}"></td>
+                                    <!--                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.typeOfEstate}"></td>-->
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.address}"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.area}"></td>
 
@@ -125,37 +302,97 @@
 
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.typeOfHeating}"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.parking} ? 'Yes' : 'No'"></td>
-                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.availability} ? 'Available' : 'Not Available'"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.description}"></td>
-                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.lastUpdated}"></td>
-
-                                    <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
-                                        <a th:href="@{'/estate/' + ${estate.id}}">Details</a>
+                                    <td sec:authorize="hasRole('ROLE_TENANT')" class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
+                                        <a th:href="@{'/applications/view/new/' + ${estate.id}}">Application For View</a>
+                                    </td>
+                                    <td sec:authorize="hasRole('ROLE_TENANT')" class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
+                                        <a th:href="@{'/applications/rental/new/' + ${estate.id}}">Application For Rental</a>
                                     </td>
                                 </tr>
 
                                 </tbody>
                             </table>
                         </div>
-                        <p class="u-text u-text-default u-text-2">Sample text. Click to select the text box. Click again or double click to start editing the text. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                     </div>
                 </div>
                 <div class="u-align-left u-container-align-left u-container-style u-tab-pane u-white u-tab-pane-2" id="tab-14b7" role="tabpanel" aria-labelledby="link-tab-14b7">
-                    <div class="u-container-layout u-valign-top u-container-layout-2">
-                        <p class="u-text u-text-default u-text-3">Sample text. Click to select the text box. Click again or double click to start editing the text. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
-                            <br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&nbsp;Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </p>
-                    </div>
-                </div>
-                <div class="u-container-style u-tab-pane u-white u-tab-pane-3" id="tab-2917" role="tabpanel" aria-labelledby="link-tab-2917">
-                    <div class="u-container-layout u-container-layout-3">
-                        <h4 class="u-text u-text-default u-text-4">Be The First To Review This Product!</h4>
-                        <p class="u-text u-text-default u-text-5">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
-                        <a href="" class="u-btn u-button-style u-btn-1">write product review</a>
+                    <div class="u-table u-table-responsive u-table-1">
+                        <h3 class="u-text u-text-default u-text-1" style="margin-top: 15px; margin-left: 10px; margin-bottom: 15px">My Estates</h3>
+
+                        <table class="u-table-entity">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <tbody class="u-table-body">
+
+
+
+                            <tr style="height: 55px;">
+                                <td class="u-first-column u-table-cell">Square Meters</td>
+                                <!--                                    <td class="u-table-cell">Type</td>-->
+                                <td class="u-table-cell">Area</td>
+                                <td class="u-table-cell">Address</td>
+
+                                <td class="u-table-cell">Age of Construction</td>
+                                <td class="u-table-cell">Duration</td>
+                                <td class="u-table-cell">Price</td>
+                                <td class="u-table-cell">Floor</td>
+                                <td class="u-table-cell">Rooms</td>
+
+                                <td class="u-table-cell">Heating</td>
+                                <td class="u-table-cell">Parking</td>
+                                <td class="u-table-cell">Availability</td>
+                                <td class="u-table-cell">Is Available</td>
+
+                                <td class="u-table-cell">View Applications</td>
+
+                            </tr>
+
+                            <tr th:if="${#lists.isEmpty(myEstates)}">
+                                <td colspan="14" class="u-border-1 u-border-grey-15 u-table-cell" style="text-align: center; color: red;">
+                                    No estates found.
+                                </td>
+                            </tr>
+
+                            <tr style="height: 56px;" th:each="estate : ${myEstates}" >
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.squareMeters}"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.address}"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.area}"></td>
+
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.ageOfConstruction}"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.duration}"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.price}"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.floor}"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.amountOfRooms}"></td>
+
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.typeOfHeating}"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.parking} ? 'Yes' : 'No'"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.availability} ? 'Available' : 'Not Available'"></td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" >
+                                    <form th:action="@{'/estate/isAvailable/' + ${estate.id}}" method="post">
+                                        <button class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1" type="submit">Available</button>
+                                    </form>
+                                </td>
+                                <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
+                                    <a th:href="@{'/applications/myEstate/' + ${estate.id}}">View</a>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+            <div class="u-container-style u-tab-pane u-white u-tab-pane-3" id="tab-2917" role="tabpanel" aria-labelledby="link-tab-2917">
+
+            </div>
         </div>
+    </div>
     </div>
 </section>
 
