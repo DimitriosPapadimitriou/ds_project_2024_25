@@ -59,8 +59,8 @@ public class OwnerService {
 
 
     @Transactional
-    public ApplicationForRegistration submitApplicationForRegistration( ApplicationForRegistration application, @RequestParam("adminId") Integer adminId, @RequestParam("ownerId") Integer ownerId){ // Estate estate
-        Owner owner = ownerRepository.findById(ownerId).orElseThrow( () -> new RuntimeException("Owner with the following ID not found:" + ownerId));
+    public ApplicationForRegistration submitApplicationForRegistration( ApplicationForRegistration application, @RequestParam("adminId") Integer adminId, @RequestParam("ownerId") Integer ownerId){
+        Owner owner = ownerRepository.findById(ownerId).orElseThrow( () ->  new RuntimeException("Owner with the following ID not found:" + ownerId));
         Admin admin = adminRepository.findById(adminId).orElseThrow( () -> new RuntimeException("Admin with the following ID not found:" + adminId));
 
 

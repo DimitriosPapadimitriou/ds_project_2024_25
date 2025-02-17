@@ -54,7 +54,7 @@ public class AdminService {
         ApplicationForRegistration application = registrationRepository.findById(applicationId)
                 .orElseThrow(() -> new RuntimeException("Application not found with ID: " + applicationId));
 
-//        application.setStatus("Rejected");
+        application.setStatus("Rejected");
 
 
         return registrationRepository.save(application);
@@ -63,6 +63,8 @@ public class AdminService {
     public List<ApplicationForRegistration> getPendingApplications() {
         return registrationRepository.findByStatus("Pending");
     }
+
+
 
 
 }

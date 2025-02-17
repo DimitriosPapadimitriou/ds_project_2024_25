@@ -103,12 +103,12 @@
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${viewApplication.description}"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
                                         <form th:action="@{'/applications/view/accept/'  + ${viewApplication.applicationID}}" method="post">
-                                            <button type="submit">Accept</button>
+                                            <button type="submit" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Accept</button>
                                         </form>
                                     </td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
-                                        <form th:action="@{'/applications/view/reject/'  + ${viewApplication.applicationID}}" method="post">
-                                            <button type="submit">Reject</button>
+                                        <form th:action="@{'/applications/view/reject/'  + ${viewApplication.applicationID}}"  method="post">
+                                            <button type="submit" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Reject</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -148,12 +148,12 @@
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${rentalApplication.description}"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
                                         <form th:action="@{'/applications/rental/accept/'  + ${rentalApplication.applicationID}}" method="post">
-                                            <button type="submit">Accept</button>
+                                            <button type="submit" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Accept</button>
                                         </form>
                                     </td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
                                         <form th:action="@{'/applications/rental/reject/'  + ${rentalApplication.applicationID}}" method="post">
-                                            <button type="submit">Reject</button>
+                                            <button type="submit" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Reject</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -4,6 +4,7 @@ import hua.gr.dit.Entitties.Admin;
 import hua.gr.dit.Entitties.Estate;
 import hua.gr.dit.Entitties.Role;
 import hua.gr.dit.Entitties.User;
+import hua.gr.dit.repositories.AdminRepository;
 import hua.gr.dit.repositories.EstateRepository;
 import hua.gr.dit.repositories.RoleRepository;
 import hua.gr.dit.repositories.UserRepository;
@@ -29,13 +30,15 @@ public class AppConfig {
     private EstateService estateService;
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private AdminRepository adminRepository;
 
-    public AppConfig(EstateRepository estateRepository, EstateService estateService, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository, UserRepository userRepository) {
-        this.estateRepository = estateRepository;
-        this.estateService = estateService;
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
+    public AppConfig(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, EstateService estateService, EstateRepository estateRepository, AdminRepository adminRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.estateService = estateService;
+        this.estateRepository = estateRepository;
+        this.adminRepository = adminRepository;
     }
 
     @PostConstruct
@@ -54,10 +57,10 @@ public class AppConfig {
     private void setupDefaultAdmins() {
 
         String defaultAdminUsername = "admin";
-        String defaultAdminEmail = "admin@example.com";
-        String defaultAdminPassword = "admin123";
+        String defaultAdminEmail = "admin@gmail.com";
+        String defaultAdminPassword = "admin1234";
 
-        if (userRepository.findByUsername(defaultAdminUsername).isEmpty()) {
+        if (userRepository.findByUsername(defaultAdminUsername).isEmpty() && adminRepository.findAll().isEmpty()) {
             Role adminRole = roleRepository.findByName("ROLE_ADMIN")
                     .orElseThrow(() -> new RuntimeException("ROLE_ADMIN not found"));
 
@@ -68,6 +71,11 @@ public class AppConfig {
             adminUser.setRoles(Set.of(adminRole));
 
             userRepository.save(adminUser);
+
+            Admin admin = new Admin();
+            admin.setUser(adminUser);
+            adminRepository.save(admin);
+            System.out.println("DEBUG: ADMIN:" + admin);
             System.out.println("Default admin user created: " + defaultAdminUsername);
         } else {
             System.out.println("Default admin already exists.");

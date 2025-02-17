@@ -68,11 +68,15 @@
     </nav>
 </div></header>
 <section class="u-align-center u-clearfix u-container-align-center u-grey-15 u-section-1" id="sec-a4aa">
-    <div class="u-clearfix u-sheet u-valign-top u-sheet-1">
+    <div class="u-clearfix u-valign-top u-sheet-1">
         <div class="u-expanded-width u-tabs u-tabs-1">
-            <ul class="u-tab-list u-unstyled" role="tablist"><li class="u-tab-item" role="presentation"><a class="active u-active-white u-button-style u-tab-link u-tab-link-1" id="link-tab-0da5" href="#tab-0da5" role="tab" aria-controls="tab-0da5" aria-selected="true">View Applications</a>
-            </li><li class="u-tab-item" role="presentation"><a class="u-active-white u-button-style u-tab-link u-tab-link-2" id="link-tab-14b7" href="#tab-14b7" role="tab" aria-controls="tab-14b7" aria-selected="false">Rental Applications</a>
-            </li></ul>
+            <ul class="u-tab-list u-unstyled" role="tablist">
+                <li class="u-tab-item" role="presentation">
+                    <a class="active u-active-white u-button-style u-tab-link u-tab-link-1" id="link-tab-0da5" href="#tab-0da5" role="tab" aria-controls="tab-0da5" aria-selected="true">
+                        View Registration
+                    </a>
+                </li>
+            </ul>
 
 
 
@@ -83,10 +87,22 @@
                         <div class="u-table u-table-responsive u-table-1">
                             <table class="u-table-entity">
                                 <colgroup>
-                                    <col width="20%">
-                                    <col width="60%">
-                                    <col width="10%">
-                                    <col width="10%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
+                                    <col width="6.25%">
                                 </colgroup>
                                 <tbody class="u-table-body">
                                 <tr style="height: 55px;">
@@ -125,16 +141,15 @@
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.typeOfHeating}"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.parking != null ? (registration.parking ? 'Yes' : 'No') : 'N/A'}"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${registration.description}"></td>
-
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
                                         <form th:action="@{'/applications/registrations/accept/' + ${registration.applicationID}}" method="post">
-                                            <button type="submit">Accept</button>
+                                            <button class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1" type="submit">Accept</button>
                                         </form>
                                     </td>
 
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
                                         <form th:action="@{'/applications/registrations/reject/' + ${registration.applicationID}}" method="post">
-                                            <button type="submit">Reject</button>
+                                            <button class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1" type="submit">Reject</button>
                                         </form>
                                     </td>
                                 </tr>

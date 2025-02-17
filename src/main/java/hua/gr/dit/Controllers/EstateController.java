@@ -149,7 +149,7 @@ public class EstateController {
     }
 
 
-    @Secured("ROLE_ADMIN") //xreiazetai to @EnableMethodSecurity(securedEnabled = true) sto config
+    @Secured("ROLE_ADMIN")
     @GetMapping("/new")
     public String addEstatePage(Model model){
         Estate estate = new Estate();
@@ -166,7 +166,7 @@ public class EstateController {
         return "addEstatePage";
     }
 
-    @Secured("ROLE_ADMIN") //xreiazetai to @EnableMethodSecurity(securedEnabled = true) sto config
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public String deleteEstateById(@PathVariable Integer id){
         estateService.deleteEstateById(id);

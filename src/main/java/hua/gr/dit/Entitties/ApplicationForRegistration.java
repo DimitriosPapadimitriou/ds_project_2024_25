@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 @Table(name = "application_for_registration")
 public class ApplicationForRegistration {
 
-//    @OneToOne
-//    @JoinColumn(name = "estate_id")
-//    private Estate estate;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "admin_id")

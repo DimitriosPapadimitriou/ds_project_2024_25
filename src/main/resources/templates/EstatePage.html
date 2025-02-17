@@ -261,11 +261,20 @@
                         <div class="u-table u-table-responsive u-table-1">
                             <table class="u-table-entity">
                                 <colgroup>
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
-                                    <col width="20%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="7.5%">
+                                    <col width="8.75%">
+                                    <col width="8.75%">
+
                                 </colgroup>
                                 <tbody class="u-table-body">
                                 <tr style="height: 55px;">
@@ -304,10 +313,10 @@
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.parking} ? 'Yes' : 'No'"></td>
                                     <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell" th:text="${estate.description}"></td>
                                     <td sec:authorize="hasRole('ROLE_TENANT')" class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
-                                        <a th:href="@{'/applications/view/new/' + ${estate.id}}">Application For View</a>
+                                        <a th:href="@{'/applications/view/new/' + ${estate.id}}" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Application For View</a>
                                     </td>
                                     <td sec:authorize="hasRole('ROLE_TENANT')" class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
-                                        <a th:href="@{'/applications/rental/new/' + ${estate.id}}">Application For Rental</a>
+                                        <a th:href="@{'/applications/rental/new/' + ${estate.id}}" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">Application For Rental</a>
                                     </td>
                                 </tr>
 
@@ -379,7 +388,7 @@
                                     </form>
                                 </td>
                                 <td class="u-border-1 u-border-grey-15 u-border-no-left u-border-no-right u-table-cell">
-                                    <a th:href="@{'/applications/myEstate/' + ${estate.id}}">View</a>
+                                    <a th:href="@{'/applications/myEstate/' + ${estate.id}}" class="u-border-none u-btn u-btn-round u-button-style u-hover-black u-palette-3-dark-1 u-radius u-btn-1">View</a>
                                 </td>
                             </tr>
 
