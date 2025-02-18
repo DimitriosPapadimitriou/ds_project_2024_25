@@ -65,7 +65,7 @@
                         <a sec:authorize="!isAuthenticated()" class="u-button-style u-nav-link" style="padding-top: 38px; padding-bottom: 38px;">
                             Login
                         </a>
-                        <a sec:authorize="isAuthenticated()" class="nu-button-style u-nav-link">
+                        <a sec:authorize="!isAuthenticated()" class="u-button-style u-nav-link" style="padding-top: 38px; padding-bottom: 38px;">
                             <form th:action="@{/logout}" method="post">
                                 <button type="submit" class="btn btn-primary">Sign Out</button>
                             </form>
